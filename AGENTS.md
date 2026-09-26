@@ -107,6 +107,15 @@ camera reach into palette internals, or vice versa.
     Owns the split, the reflection state, and opacity placement.
   - `SwatchReflection` — `SwatchReflection` env value + `OpacityPlacement`
     enum + env plumbing.
+- `Premium/`
+  - `PremiumStore` — protocol gating premium shades (`isSubscribed`,
+    `monthlyPriceText`, `subscribe()`, `restore()`). **This is the RevenueCat
+    integration seam** — its doc comment maps each member to the SDK call.
+  - `MockPremiumStore` — `@Observable` demo store; grants entitlement on
+    `subscribe()` and persists it in `UserDefaults`. Swap for a
+    `RevenueCatPremiumStore` later.
+  - `PaywallView` — the $4.99/mo subscription sheet; presentation-only, calls
+    back to run the purchase so it works over mock or RevenueCat unchanged.
 - `Camera/`
   - `CameraPreviewView` — layers a non-interactive effects overlay over a
     replaceable feed.
@@ -131,6 +140,12 @@ camera reach into palette internals, or vice versa.
 - **Layout:** closed = camera full-screen; open = split (camera top / palette
   bottom in portrait, camera left / palette right in landscape). Camera gets
   the larger share via `splitArrangementLayoutRatio(0.64)`.
+- **Premium gating:** `MakeupOption.isPremium` marks ~1/3 of each group.
+  A locked premium swatch (premium && `!isSubscribed`) shows a gold border +
+  lock icon; tapping or holding it opens the `PaywallView` instead of
+  applying. Subscribing unlocks all premium swatches live. The palette is
+  generic over `Store: PremiumStore` (mirrors the `Bridge` generic) so
+  Observation tracks `isSubscribed`.
 
 ## Discovering the iOS 27.1 hinge/fold API
 
@@ -171,6 +186,12 @@ Relevant: `DeviceHinge { status, angle }`, `DeviceHingeContext.hinge`,
 - [ ] **No palette UI for eyebrow masks yet.** `applyEyebrowMask` /
   `disableEyebrowMask` exist on the bridge and surface in `MakeupLook`, but
   there is no Brow Shape row in the MP.
+- [ ] **Integrate the RevenueCat SDK.** The premium gate (lock UI, paywall,
+  entitlement) is built and demoable behind `PremiumStore` with a mock. Next:
+  add the RevenueCat SPM package, implement `RevenueCatPremiumStore:
+  PremiumStore` (see the seam doc in `PremiumStore.swift`), configure the API
+  key + a $4.99/mo product/entitlement in the RevenueCat dashboard, and swap
+  the `MockPremiumStore()` in `ContentView` for it. No UI changes needed.
 - [ ] **Real face renderer.** Replace `MockCameraFeedView` /
   `MockCameraEffectsView` with a 3D face that consumes `MakeupLook`
   (teammates are sourcing the model). Nothing else should need to change.

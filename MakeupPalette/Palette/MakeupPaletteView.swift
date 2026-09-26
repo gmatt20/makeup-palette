@@ -1,10 +1,12 @@
 import SwiftUI
 
-struct MakeupPaletteView<Bridge: MakeupEffectBridge>: View {
+struct MakeupPaletteView<Bridge: MakeupEffectBridge, Store: PremiumStore>: View {
   var bridge: Bridge
+  var premium: Store
 
   @State private var editingOption: MakeupOption?
   @State private var editingCategory: MakeupCategory?
+  @State private var showPaywall = false
 
   // Chosen by the layout from fold + orientation so opacity hugs the hinge.
   @Environment(\.opacityPlacement) private var opacityPlacement
@@ -22,6 +24,13 @@ struct MakeupPaletteView<Bridge: MakeupEffectBridge>: View {
           }
         }
         .presentationDetents([.medium, .large])
+      }
+      .sheet(isPresented: $showPaywall) {
+        PaywallView(
+          priceText: premium.monthlyPriceText,
+          onSubscribe: { premium.subscribe() },
+          onRestore: { premium.restore() }
+        )
       }
   }
 
@@ -75,6 +84,7 @@ struct MakeupPaletteView<Bridge: MakeupEffectBridge>: View {
             category: category,
             options: MakeupCatalog.options(for: category),
             appliedOption: bridge.selectedOption(for: category),
+            isSubscribed: premium.isSubscribed,
             onSelect: { option in
               bridge.select(option, for: category)
             },
@@ -83,7 +93,8 @@ struct MakeupPaletteView<Bridge: MakeupEffectBridge>: View {
               bridge.select(option, for: category)
               editingCategory = category
               editingOption = option
-            }
+            },
+            onLocked: { showPaywall = true }
           )
         }
       }
@@ -98,8 +109,10 @@ private struct PaletteCategoryRow: View {
   var category: MakeupCategory
   var options: [MakeupOption]
   var appliedOption: MakeupOption?
+  var isSubscribed: Bool
   var onSelect: (MakeupOption?) -> Void
   var onEdit: (MakeupOption) -> Void
+  var onLocked: () -> Void
 
   var body: some View {
     VStack(alignment: .leading, spacing: 14) {
@@ -113,8 +126,10 @@ private struct PaletteCategoryRow: View {
             category: category,
             option: nil,
             isSelected: appliedOption == nil,
+            isLocked: false,
             onSelect: { onSelect(nil) },
-            onEdit: {}
+            onEdit: {},
+            onLocked: onLocked
           )
 
           ForEach(options) { option in
@@ -125,8 +140,10 @@ private struct PaletteCategoryRow: View {
               category: category,
               option: display,
               isSelected: isSelected,
+              isLocked: option.isPremium && !isSubscribed,
               onSelect: { onSelect(option) },
-              onEdit: { onEdit(display) }
+              onEdit: { onEdit(display) },
+              onLocked: onLocked
             )
           }
         }
@@ -142,12 +159,25 @@ private struct PaletteSwatchButton: View {
   var category: MakeupCategory
   var option: MakeupOption?
   var isSelected: Bool
+  var isLocked: Bool
   var onSelect: () -> Void
   var onEdit: () -> Void
+  var onLocked: () -> Void
 
   @Environment(\.swatchReflection) private var reflection
 
+  private static let premiumGold = Color(red: 0.83, green: 0.62, blue: 0.16)
+
   private var isEditable: Bool { option?.editableColor != nil }
+
+  private var borderColor: Color {
+    if isLocked { return Self.premiumGold }
+    return isSelected ? .black : Color(white: 0.8)
+  }
+
+  private var borderWidth: CGFloat {
+    isLocked ? 2 : (isSelected ? 2 : 1)
+  }
 
   var body: some View {
     VStack(spacing: 8) {
@@ -156,12 +186,20 @@ private struct PaletteSwatchButton: View {
           .fill(Color(white: 0.95))
 
         swatchContent
+
+        if isLocked {
+          Image(systemName: "lock.fill")
+            .font(.system(size: 17, weight: .bold))
+            .foregroundStyle(Self.premiumGold)
+            .padding(6)
+            .background(.white.opacity(0.85), in: Circle())
+        }
       }
       .frame(width: 66, height: 66)
       .clipShape(RoundedRectangle(cornerRadius: 14))
       .overlay {
         RoundedRectangle(cornerRadius: 14)
-          .strokeBorder(isSelected ? .black : Color(white: 0.8), lineWidth: isSelected ? 2 : 1)
+          .strokeBorder(borderColor, lineWidth: borderWidth)
       }
 
       Text(option?.name ?? "None")
@@ -171,17 +209,25 @@ private struct PaletteSwatchButton: View {
     .frame(width: 90, height: 104)
     .swatchReflectionEffect(reflection)
     .contentShape(Rectangle())
-    // Press applies immediately; hold opens the color editor.
-    .onTapGesture { onSelect() }
+    // Locked premium -> paywall; otherwise press applies, hold edits color.
+    .onTapGesture { isLocked ? onLocked() : onSelect() }
     .onLongPressGesture(minimumDuration: 0.35) {
-      if isEditable { onEdit() }
+      if isLocked {
+        onLocked()
+      } else if isEditable {
+        onEdit()
+      }
     }
     .accessibilityElement(children: .combine)
     .accessibilityAddTraits(.isButton)
-    .accessibilityLabel("\(category.title), \(option?.name ?? "None")")
+    .accessibilityLabel("\(category.title), \(option?.name ?? "None")\(isLocked ? ", premium locked" : "")")
     .accessibilityValue(isSelected ? "Selected" : "Not selected")
-    .accessibilityAction(named: "Edit color") {
-      if isEditable { onEdit() }
+    .accessibilityAction(named: isLocked ? "Unlock premium" : "Edit color") {
+      if isLocked {
+        onLocked()
+      } else if isEditable {
+        onEdit()
+      }
     }
   }
 

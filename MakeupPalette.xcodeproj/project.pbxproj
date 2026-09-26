@@ -28,6 +28,9 @@
 		A10000000000000000000043 /* SwatchColorEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000042 /* SwatchColorEditor.swift */; };
 		A10000000000000000000045 /* MakeupLook.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000044 /* MakeupLook.swift */; };
 		A10000000000000000000047 /* EyebrowMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000046 /* EyebrowMask.swift */; };
+		A10000000000000000000052 /* PremiumStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000051 /* PremiumStore.swift */; };
+		A10000000000000000000054 /* MockPremiumStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000053 /* MockPremiumStore.swift */; };
+		A10000000000000000000056 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000055 /* PaywallView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +57,9 @@
 		A10000000000000000000042 /* SwatchColorEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwatchColorEditor.swift; sourceTree = "<group>"; };
 		A10000000000000000000044 /* MakeupLook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeupLook.swift; sourceTree = "<group>"; };
 		A10000000000000000000046 /* EyebrowMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyebrowMask.swift; sourceTree = "<group>"; };
+		A10000000000000000000051 /* PremiumStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumStore.swift; sourceTree = "<group>"; };
+		A10000000000000000000053 /* MockPremiumStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPremiumStore.swift; sourceTree = "<group>"; };
+		A10000000000000000000055 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +90,7 @@
 				A10000000000000000000034 /* Models */,
 				A10000000000000000000035 /* Palette */,
 				A10000000000000000000036 /* Layout */,
+				A10000000000000000000050 /* Premium */,
 				A10000000000000000000009 /* Info.plist */,
 				A1000000000000000000000A /* Assets.xcassets */,
 			);
@@ -134,6 +141,16 @@
 				A10000000000000000000040 /* SwatchReflection.swift */,
 			);
 			path = Layout;
+			sourceTree = "<group>";
+		};
+		A10000000000000000000050 /* Premium */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000051 /* PremiumStore.swift */,
+				A10000000000000000000053 /* MockPremiumStore.swift */,
+				A10000000000000000000055 /* PaywallView.swift */,
+			);
+			path = Premium;
 			sourceTree = "<group>";
 		};
 		A10000000000000000000004 /* Products */ = {
@@ -233,6 +250,9 @@
 				A10000000000000000000043 /* SwatchColorEditor.swift in Sources */,
 				A10000000000000000000045 /* MakeupLook.swift in Sources */,
 				A10000000000000000000047 /* EyebrowMask.swift in Sources */,
+				A10000000000000000000052 /* PremiumStore.swift in Sources */,
+				A10000000000000000000054 /* MockPremiumStore.swift in Sources */,
+				A10000000000000000000056 /* PaywallView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

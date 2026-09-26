@@ -4,6 +4,8 @@ struct MakeupOption: Identifiable, Equatable {
   let name: String
   let swatch: MakeupSwatch
   let tint: MakeupColor
+  /// Gated behind the premium subscription. See `PremiumStore`.
+  let isPremium: Bool
 
   /// The editable base color, present only for color swatches.
   var editableColor: MakeupColor? {
@@ -20,7 +22,8 @@ struct MakeupOption: Identifiable, Equatable {
       category: category,
       name: name,
       swatch: .color(color),
-      tint: color
+      tint: color,
+      isPremium: isPremium
     )
   }
 }
