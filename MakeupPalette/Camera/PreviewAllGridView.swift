@@ -1,10 +1,11 @@
 import SwiftUI
+import MakeupFace
 
-/// Full-screen 2×2 grid of fake cameras, each wearing a different option from
+/// Full-screen 2×2 grid of real 3D faces, each wearing a different option from
 /// one category, with vertical up / down / cancel controls at the bottom right.
 ///
-/// Consumes only `MakeupLook`s, like the single-camera FC, so swapping in the
-/// real face renderer here is the same drop-in as `MockCameraEffectsView`.
+/// Each cell owns its own `MakeupFaceController` (isolated saved-look file so it
+/// never clobbers the main session) and renders one `MakeupLook`.
 struct PreviewAllGridView: View {
   var session: PreviewAllSession
   var baseLook: MakeupLook
@@ -25,15 +26,13 @@ struct PreviewAllGridView: View {
       let rowHeight = (geometry.size.height - 2) / 2
 
       LazyVGrid(columns: columns, spacing: 2) {
-        ForEach(cells, id: \.option.id) { cell in
-          CameraPreviewView {
-            MockCameraFeedView()
-          } effects: {
-            MockCameraEffectsView(look: cell.look)
-          }
-          .frame(height: rowHeight)
-          .accessibilityElement(children: .combine)
-          .accessibilityLabel("\(session.category.title) preview, \(cell.option.name)")
+        // Keyed by grid slot (not option) so paging re-applies the look to the
+        // existing controller instead of reloading four 3D models each time.
+        ForEach(Array(cells.enumerated()), id: \.offset) { _, cell in
+          PreviewFaceCell(look: cell.look)
+            .frame(height: rowHeight)
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel("\(session.category.title) preview, \(cell.option.name)")
         }
       }
     }
@@ -54,6 +53,31 @@ struct PreviewAllGridView: View {
       .ignoresSafeArea(.container, edges: .horizontal)
     }
     .sensoryFeedback(.selection, trigger: session.visibleOptions.map(\.id))
+  }
+}
+
+/// One grid cell: a real 3D face wearing `look`, with its own controller and an
+/// isolated saved-look file so it never touches the main session's saved look.
+private struct PreviewFaceCell: View {
+  var look: MakeupLook
+
+  @State private var controller = MakeupFaceController(
+    savedLookURL: FileManager.default.temporaryDirectory
+      .appendingPathComponent("preview-all-\(UUID().uuidString).json")
+  )
+
+  var body: some View {
+    MakeupFacePreview(controller: controller, showsChrome: false)
+      .task(id: look) {
+        await controller.load()
+        // load() can return early if a load was already in flight; wait for
+        // readiness before applying so the look isn't dropped.
+        while controller.status != .ready {
+          if case .failed = controller.status { return }
+          try? await Task.sleep(for: .milliseconds(60))
+        }
+        controller.apply(look)
+      }
   }
 }
 

@@ -49,7 +49,10 @@ struct DuoStudioLayout<Camera: View, Palette: View, Crease: View>: View {
 
         if hingeIsOpen ?? isInnerDisplay {
           ArrangementView {
+            // Fill to the physical top edge (under the status bar) instead of
+            // leaving a safe-area gap above the face.
             camera
+              .ignoresSafeArea(.container, edges: .top)
           } secondary: {
             palette
               .environment(

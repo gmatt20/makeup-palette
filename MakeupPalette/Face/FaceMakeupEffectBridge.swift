@@ -101,3 +101,37 @@ private extension MakeupColor {
     try MakeupCore.MakeupColor(red: Double(red), green: Double(green), blue: Double(blue))
   }
 }
+
+private extension MakeupCategory {
+  var coreTreatment: Treatment {
+    switch self {
+    case .lips: .lipstick
+    case .blush: .blush
+    case .brow: .browFill
+    }
+  }
+}
+
+extension MakeupFaceController {
+  /// Renders a whole app `MakeupLook` (palette effects + global opacity) onto
+  /// this face. Used by the Preview All grid, where each cell owns a controller
+  /// and shows one variation. Applies treatments serially so the controller's
+  /// in-flight guard is never tripped; requires the face to be `.ready`.
+  func apply(_ appLook: MakeupLook) {
+    let intensity = Double(min(max(appLook.opacity, 0), 1))
+    Task {
+      for category in MakeupCategory.allCases {
+        let treatment = category.coreTreatment
+        do {
+          if let option = appLook.effects[category] {
+            try await setMakeup(treatment, color: try option.tint.coreColor(), intensity: intensity)
+          } else {
+            try await clear(treatment)
+          }
+        } catch {
+          // Keep whatever is currently rendered on this cell.
+        }
+      }
+    }
+  }
+}

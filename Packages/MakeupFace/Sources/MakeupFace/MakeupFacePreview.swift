@@ -6,8 +6,14 @@ import RealityKit
 public struct MakeupFacePreview: View {
     @ObservedObject private var controller: MakeupFaceController
     @State private var dragOrigin: (yaw: Float, pitch: Float)?
+    /// When false, hides the "Your look" label and rotation controls — e.g. for
+    /// small side-by-side preview cells. Loading/failed states still show.
+    private let showsChrome: Bool
 
-    public init(controller: MakeupFaceController) { self.controller = controller }
+    public init(controller: MakeupFaceController, showsChrome: Bool = true) {
+        self.controller = controller
+        self.showsChrome = showsChrome
+    }
 
     public var body: some View {
         ZStack(alignment: .bottom) {
@@ -27,7 +33,7 @@ public struct MakeupFacePreview: View {
                                       pitch: controller.pitch)
                 }
 
-            if controller.status == .ready {
+            if showsChrome && controller.status == .ready {
                 VStack {
                     HStack {
                         Text(controller.showsOriginal ? "Original" : "Your look")
