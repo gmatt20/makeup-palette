@@ -12,6 +12,18 @@
 		A1000000000000000000000D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000000A /* Assets.xcassets */; };
 		A1000000000000000000001A /* CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000018 /* CameraPreviewView.swift */; };
 		A1000000000000000000001B /* MockCameraFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000019 /* MockCameraFeedView.swift */; };
+		A10000000000000000000028 /* MakeupCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000001C /* MakeupCategory.swift */; };
+		A10000000000000000000029 /* MakeupColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000001D /* MakeupColor.swift */; };
+		A1000000000000000000002A /* MakeupSwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000001E /* MakeupSwatch.swift */; };
+		A1000000000000000000002B /* MakeupOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000001F /* MakeupOption.swift */; };
+		A1000000000000000000002C /* MakeupCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000020 /* MakeupCatalog.swift */; };
+		A1000000000000000000002D /* MakeupEffectBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000021 /* MakeupEffectBridge.swift */; };
+		A1000000000000000000002E /* MockMakeupEffectBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000022 /* MockMakeupEffectBridge.swift */; };
+		A1000000000000000000002F /* MakeupColor+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000023 /* MakeupColor+SwiftUI.swift */; };
+		A10000000000000000000030 /* PaletteTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000024 /* PaletteTypography.swift */; };
+		A10000000000000000000031 /* MakeupPaletteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000025 /* MakeupPaletteView.swift */; };
+		A10000000000000000000032 /* MockCameraEffectsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000026 /* MockCameraEffectsView.swift */; };
+		A10000000000000000000033 /* DuoStudioLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000027 /* DuoStudioLayout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +34,18 @@
 		A1000000000000000000000A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A10000000000000000000018 /* CameraPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreviewView.swift; sourceTree = "<group>"; };
 		A10000000000000000000019 /* MockCameraFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCameraFeedView.swift; sourceTree = "<group>"; };
+		A1000000000000000000001C /* MakeupCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeupCategory.swift; sourceTree = "<group>"; };
+		A1000000000000000000001D /* MakeupColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeupColor.swift; sourceTree = "<group>"; };
+		A1000000000000000000001E /* MakeupSwatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeupSwatch.swift; sourceTree = "<group>"; };
+		A1000000000000000000001F /* MakeupOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeupOption.swift; sourceTree = "<group>"; };
+		A10000000000000000000020 /* MakeupCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeupCatalog.swift; sourceTree = "<group>"; };
+		A10000000000000000000021 /* MakeupEffectBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeupEffectBridge.swift; sourceTree = "<group>"; };
+		A10000000000000000000022 /* MockMakeupEffectBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMakeupEffectBridge.swift; sourceTree = "<group>"; };
+		A10000000000000000000023 /* MakeupColor+SwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MakeupColor+SwiftUI.swift"; sourceTree = "<group>"; };
+		A10000000000000000000024 /* PaletteTypography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteTypography.swift; sourceTree = "<group>"; };
+		A10000000000000000000025 /* MakeupPaletteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeupPaletteView.swift; sourceTree = "<group>"; };
+		A10000000000000000000026 /* MockCameraEffectsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCameraEffectsView.swift; sourceTree = "<group>"; };
+		A10000000000000000000027 /* DuoStudioLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuoStudioLayout.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +73,9 @@
 				A10000000000000000000007 /* MakeupPaletteApp.swift */,
 				A10000000000000000000008 /* ContentView.swift */,
 				A10000000000000000000017 /* Camera */,
+				A10000000000000000000034 /* Models */,
+				A10000000000000000000035 /* Palette */,
+				A10000000000000000000036 /* Layout */,
 				A10000000000000000000009 /* Info.plist */,
 				A1000000000000000000000A /* Assets.xcassets */,
 			);
@@ -60,8 +87,41 @@
 			children = (
 				A10000000000000000000018 /* CameraPreviewView.swift */,
 				A10000000000000000000019 /* MockCameraFeedView.swift */,
+				A10000000000000000000026 /* MockCameraEffectsView.swift */,
 			);
 			path = Camera;
+			sourceTree = "<group>";
+		};
+		A10000000000000000000034 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A1000000000000000000001C /* MakeupCategory.swift */,
+				A1000000000000000000001D /* MakeupColor.swift */,
+				A1000000000000000000001E /* MakeupSwatch.swift */,
+				A1000000000000000000001F /* MakeupOption.swift */,
+				A10000000000000000000020 /* MakeupCatalog.swift */,
+				A10000000000000000000021 /* MakeupEffectBridge.swift */,
+				A10000000000000000000022 /* MockMakeupEffectBridge.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A10000000000000000000035 /* Palette */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000023 /* MakeupColor+SwiftUI.swift */,
+				A10000000000000000000024 /* PaletteTypography.swift */,
+				A10000000000000000000025 /* MakeupPaletteView.swift */,
+			);
+			path = Palette;
+			sourceTree = "<group>";
+		};
+		A10000000000000000000036 /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000027 /* DuoStudioLayout.swift */,
+			);
+			path = Layout;
 			sourceTree = "<group>";
 		};
 		A10000000000000000000004 /* Products */ = {
@@ -145,6 +205,18 @@
 				A1000000000000000000000C /* ContentView.swift in Sources */,
 				A1000000000000000000001A /* CameraPreviewView.swift in Sources */,
 				A1000000000000000000001B /* MockCameraFeedView.swift in Sources */,
+				A10000000000000000000028 /* MakeupCategory.swift in Sources */,
+				A10000000000000000000029 /* MakeupColor.swift in Sources */,
+				A1000000000000000000002A /* MakeupSwatch.swift in Sources */,
+				A1000000000000000000002B /* MakeupOption.swift in Sources */,
+				A1000000000000000000002C /* MakeupCatalog.swift in Sources */,
+				A1000000000000000000002D /* MakeupEffectBridge.swift in Sources */,
+				A1000000000000000000002E /* MockMakeupEffectBridge.swift in Sources */,
+				A1000000000000000000002F /* MakeupColor+SwiftUI.swift in Sources */,
+				A10000000000000000000030 /* PaletteTypography.swift in Sources */,
+				A10000000000000000000031 /* MakeupPaletteView.swift in Sources */,
+				A10000000000000000000032 /* MockCameraEffectsView.swift in Sources */,
+				A10000000000000000000033 /* DuoStudioLayout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
