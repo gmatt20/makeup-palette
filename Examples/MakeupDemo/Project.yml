@@ -1,0 +1,53 @@
+# Minimal iOS app that hosts the face component, for the PRD section 8 integration checkpoint.
+#
+# This is a text source of truth on purpose: it can be reviewed and diffed without a Mac.
+# Generate the Xcode project on the Mac, then open or build it:
+#
+#   brew install xcodegen
+#   cd Examples/MakeupDemo && xcodegen generate
+#   xcodebuild -project MakeupDemo.xcodeproj -scheme MakeupDemo \
+#              -destination 'platform=iOS Simulator,name=iPhone 16 Pro' build
+#
+# Deliberately no NSCameraUsageDescription key: PRD section 2 requires that this path never
+# shows a camera prompt, and omitting the key makes that observable in the built app.
+# The app owner replaces the palette in MakeupDemoApp.swift with the finished UI.
+
+name: MakeupDemo
+options:
+  bundleIdPrefix: com.example.makeupdemo
+  createIntermediateGroups: true
+  deploymentTarget:
+    iOS: "17.0"
+
+packages:
+  MakeupPalette:
+    path: ../..
+
+targets:
+  MakeupDemo:
+    type: application
+    platform: iOS
+    sources:
+      - path: MakeupDemoApp.swift
+    dependencies:
+      - package: MakeupPalette
+        product: MakeupCore
+      - package: MakeupPalette
+        product: MakeupFace
+    settings:
+      base:
+        # 1 = iPhone only, matching the Duo target.
+        TARGETED_DEVICE_FAMILY: "1"
+        GENERATE_INFOPLIST_FILE: NO
+        SWIFT_VERSION: "5.9"
+        CODE_SIGNING_ALLOWED: NO
+    info:
+      path: Info.plist
+      properties:
+        CFBundleDisplayName: Makeup Demo
+        UILaunchScreen: {}
+        UIRequiresFullScreen: false
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
