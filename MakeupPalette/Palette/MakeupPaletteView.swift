@@ -2,6 +2,8 @@ import SwiftUI
 
 struct MakeupPaletteView<Bridge: MakeupEffectBridge>: View {
   var bridge: Bridge
+  /// Asks the layout to open the 2×2 "Preview All" grid for a category.
+  var onPreviewAll: (MakeupCategory) -> Void
 
   @State private var editingOption: MakeupOption?
   @State private var editingCategory: MakeupCategory?
@@ -83,7 +85,8 @@ struct MakeupPaletteView<Bridge: MakeupEffectBridge>: View {
               bridge.select(option, for: category)
               editingCategory = category
               editingOption = option
-            }
+            },
+            onPreviewAll: { onPreviewAll(category) }
           )
         }
       }
@@ -100,6 +103,7 @@ private struct PaletteCategoryRow: View {
   var appliedOption: MakeupOption?
   var onSelect: (MakeupOption?) -> Void
   var onEdit: (MakeupOption) -> Void
+  var onPreviewAll: () -> Void
 
   var body: some View {
     VStack(alignment: .leading, spacing: 14) {
@@ -116,6 +120,8 @@ private struct PaletteCategoryRow: View {
             onSelect: { onSelect(nil) },
             onEdit: {}
           )
+
+          PreviewAllButton(category: category, action: onPreviewAll)
 
           ForEach(options) { option in
             let isSelected = appliedOption?.id == option.id
@@ -201,6 +207,40 @@ private struct PaletteSwatchButton: View {
         .font(.title2)
         .foregroundStyle(.secondary)
     }
+  }
+}
+
+/// Tile between "None" and the swatches that opens the 2×2 Preview All grid,
+/// trying four of the row's options on at once.
+private struct PreviewAllButton: View {
+  var category: MakeupCategory
+  var action: () -> Void
+
+  @Environment(\.swatchReflection) private var reflection
+
+  var body: some View {
+    Button(action: action) {
+      VStack(spacing: 8) {
+        Image(systemName: "square.grid.2x2")
+          .font(.title2)
+          .frame(width: 66, height: 66)
+          .background(Color(white: 0.95), in: RoundedRectangle(cornerRadius: 14))
+          .overlay {
+            RoundedRectangle(cornerRadius: 14)
+              .strokeBorder(Color(white: 0.8), lineWidth: 1)
+          }
+
+        Text("Preview All")
+          .font(PaletteTypography.label)
+          .lineLimit(1)
+      }
+      .frame(width: 90, height: 104)
+      .contentShape(Rectangle())
+    }
+    .buttonStyle(.plain)
+    .swatchReflectionEffect(reflection)
+    .accessibilityLabel("\(category.title), Preview All")
+    .accessibilityHint("Shows four \(category.title.lowercased()) options side by side")
   }
 }
 

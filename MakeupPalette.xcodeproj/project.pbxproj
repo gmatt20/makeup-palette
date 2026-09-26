@@ -27,6 +27,8 @@
 		A10000000000000000000041 /* SwatchReflection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000040 /* SwatchReflection.swift */; };
 		A10000000000000000000043 /* SwatchColorEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000042 /* SwatchColorEditor.swift */; };
 		A10000000000000000000045 /* MakeupLook.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000044 /* MakeupLook.swift */; };
+		A10000000000000000000049 /* PreviewAllSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000048 /* PreviewAllSession.swift */; };
+		A1000000000000000000004B /* PreviewAllGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000004A /* PreviewAllGridView.swift */; };
 		A10000000000000000000047 /* EyebrowMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000046 /* EyebrowMask.swift */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +55,8 @@
 		A10000000000000000000040 /* SwatchReflection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwatchReflection.swift; sourceTree = "<group>"; };
 		A10000000000000000000042 /* SwatchColorEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwatchColorEditor.swift; sourceTree = "<group>"; };
 		A10000000000000000000044 /* MakeupLook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeupLook.swift; sourceTree = "<group>"; };
+		A10000000000000000000048 /* PreviewAllSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewAllSession.swift; sourceTree = "<group>"; };
+		A1000000000000000000004A /* PreviewAllGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewAllGridView.swift; sourceTree = "<group>"; };
 		A10000000000000000000046 /* EyebrowMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyebrowMask.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -96,6 +100,7 @@
 				A10000000000000000000018 /* CameraPreviewView.swift */,
 				A10000000000000000000019 /* MockCameraFeedView.swift */,
 				A10000000000000000000026 /* MockCameraEffectsView.swift */,
+				A1000000000000000000004A /* PreviewAllGridView.swift */,
 			);
 			path = Camera;
 			sourceTree = "<group>";
@@ -111,6 +116,7 @@
 				A10000000000000000000021 /* MakeupEffectBridge.swift */,
 				A10000000000000000000022 /* MockMakeupEffectBridge.swift */,
 				A10000000000000000000044 /* MakeupLook.swift */,
+				A10000000000000000000048 /* PreviewAllSession.swift */,
 				A10000000000000000000046 /* EyebrowMask.swift */,
 			);
 			path = Models;
@@ -232,6 +238,8 @@
 				A10000000000000000000041 /* SwatchReflection.swift in Sources */,
 				A10000000000000000000043 /* SwatchColorEditor.swift in Sources */,
 				A10000000000000000000045 /* MakeupLook.swift in Sources */,
+				A10000000000000000000049 /* PreviewAllSession.swift in Sources */,
+				A1000000000000000000004B /* PreviewAllGridView.swift in Sources */,
 				A10000000000000000000047 /* EyebrowMask.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

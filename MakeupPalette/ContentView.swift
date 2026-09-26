@@ -2,16 +2,34 @@ import SwiftUI
 
 struct ContentView: View {
   @State private var bridge = MockMakeupEffectBridge()
+  /// Non-nil while "Preview All" replaces the studio with the 2×2 camera grid.
+  @State private var previewAll: PreviewAllSession?
 
   var body: some View {
-    DuoStudioLayout {
-      CameraPreviewView {
-        MockCameraFeedView()
-      } effects: {
-        MockCameraEffectsView(look: bridge.look)
+    ZStack {
+      if let session = previewAll {
+        PreviewAllGridView(
+          session: session,
+          baseLook: bridge.look,
+          onPrevious: { previewAll?.showPreviousPage() },
+          onNext: { previewAll?.showNextPage() },
+          onCancel: { withAnimation(.smooth) { previewAll = nil } }
+        )
+        .transition(.opacity)
+      } else {
+        DuoStudioLayout {
+          CameraPreviewView {
+            MockCameraFeedView()
+          } effects: {
+            MockCameraEffectsView(look: bridge.look)
+          }
+        } palette: {
+          MakeupPaletteView(bridge: bridge) { category in
+            withAnimation(.smooth) { previewAll = PreviewAllSession(category: category) }
+          }
+        }
+        .transition(.opacity)
       }
-    } palette: {
-      MakeupPaletteView(bridge: bridge)
     }
   }
 }
