@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Makeup · iPhone Duo harness</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">{"imports":{"three":"/vendor/build/three.module.js","three/addons/":"/vendor/examples/jsm/"}}</script>
+</head>
+<body>
+  <header>
+    <div><p class="eyebrow">WINDOWS DUO DEVELOPMENT HARNESS</p><h1>Makeup station</h1></div>
+    <div class="rig">
+      <label class="field">Posture <select id="posture"></select></label>
+      <label class="field">Scale <select id="scale">
+        <option value="fit">Fit window</option>
+        <option value="1">1:1 (true size)</option>
+        <option value="0.75">75%</option>
+        <option value="0.5">50%</option>
+      </select></label>
+      <p id="readout" class="readout" role="status" aria-live="polite"></p>
+    </div>
+  </header>
+  <main id="stage">
+    <div id="deviceScale">
+      <div id="device" class="duo" data-posture="open">
+        <div id="screen" class="duo-screen">
+          <section class="pane pane--face mirror" aria-label="Face preview">
+            <div id="viewport" tabindex="0" role="img" aria-label="3D face. Drag or use arrow keys to rotate. Press Home for the front view."></div>
+            <div class="view-bar"><span>Drag to turn · arrow keys also work</span><button id="front">Front</button><label><input id="before" type="checkbox"> Show original</label></div>
+            <p id="status" class="status" role="status" aria-live="polite">Loading portrait and makeup masks…</p>
+          </section>
+          <div class="hinge" aria-hidden="true"></div>
+          <aside id="palette" class="pane pane--palette" aria-label="Makeup controls">
+            <p class="eyebrow">YOUR PALETTE</p><h2>Make it your own.</h2>
+            <fieldset id="controls" disabled>
+              <label for="treatment">Treatment</label><select id="treatment"></select>
+              <div class="color-row"><label for="color">Color</label><input type="color" id="color" value="#bc395b"><output id="hex">#BC395B</output></div>
+              <div id="swatches" aria-label="Color swatches"></div>
+              <div class="label-row"><label for="intensity">Intensity</label><output id="amount">55%</output></div>
+              <input id="intensity" type="range" min="0" max="100" value="55">
+              <p id="treatment-state">No added makeup for this treatment.</p>
+              <button id="clear" class="secondary">Clear treatment</button>
+              <button id="reset" class="secondary">Reset all</button>
+            </fieldset>
+            <p class="note">Changes save on this browser. Original restores the supplied model, including its existing makeup.</p>
+            <p class="note">Layouts here are Duo-accurate proposals. The native fold and orientation shell is owned by the app teammate.</p>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </main>
+  <p id="posture-detail" class="posture-detail"></p>
+  <script type="module" src="app.mjs"></script>
+</body>
+</html>
