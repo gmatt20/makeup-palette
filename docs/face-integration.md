@@ -211,10 +211,11 @@ private extension MakeupColor {
  }
 ```
 
-`MakeupPaletteView` is untouched. `@State` keeps the bridge — and therefore the face session and
-its persistence restore — alive across posture changes. **Never recreate the bridge on fold.**
-Retire `MockMakeupEffectBridge` and the mock camera views once this lands, or keep them behind a
-preview-only flag for design iteration.
+The change is already applied on this branch. The snippet above shows the essential delta only —
+the real `ContentView` also carries the Preview All grid and the crease opacity slider, which are
+untouched. `MakeupPaletteView` is untouched. `@State` keeps the bridge, and therefore the face
+session and its persistence restore, alive across posture changes. **Never recreate the bridge on
+fold.** See section 12 for what happens to the mock camera types.
 
 ## 6. Category mapping
 
@@ -324,6 +325,12 @@ is isolated in its own commit for exactly that reason.
 `Face.usdz`, `base-color.jpg`, the 17 masks, and the manifest are bundled — about 11.9 MB. The
 Windows-only `face.glb` derivative is deliberately excluded, keeping 17.7 MB out of the app.
 
-The mock camera still compiles and is untouched: `MockCameraFeedView`, `MockCameraEffectsView`,
-and `MockMakeupEffectBridge` are simply no longer referenced from `ContentView`. Delete them when
-you are satisfied, or keep them for design iteration.
+The mock camera still compiles and none of it was deleted. `MockCameraFeedView` and
+`MockMakeupEffectBridge` are no longer referenced from `ContentView`, but `MockCameraEffectsView`
+still is: **the Preview All 2×2 grid renders `MockCameraEffectsView(look:)` per cell**, so those
+cells show text capsules rather than four rendered faces. Wiring Preview All to the real renderer
+would need one `MakeupFaceController` per cell and each composite is CPU work, so that is a
+deliberate decision rather than something to switch on quietly.
+
+`MockMakeupEffectBridge` stays useful as the 2D fallback and for palette design iteration without
+starting RealityKit.
