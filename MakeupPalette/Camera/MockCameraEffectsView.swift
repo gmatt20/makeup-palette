@@ -11,25 +11,43 @@ struct MockCameraEffectsView: View {
     VStack {
       Spacer()
 
-      HStack(spacing: 8) {
-        ForEach(look.activeOptions) { option in
-          EffectBadge(title: option.category.title, option: option)
+      // Stack the badges when the camera is too narrow for one row (e.g. a
+      // quarter-screen Preview All cell).
+      ViewThatFits(in: .horizontal) {
+        HStack(spacing: 8) {
+          badges
+          Spacer(minLength: 0)
+          opacityChip
         }
 
-        if let mask = look.eyebrowMask {
-          MaskBadge(title: "Brow Shape", mask: mask)
+        VStack(alignment: .leading, spacing: 6) {
+          badges
+          opacityChip
         }
-
-        Spacer(minLength: 0)
-
-        if !look.isEmpty {
-          OpacityChip(opacity: look.opacity)
-        }
+        .frame(maxWidth: .infinity, alignment: .leading)
       }
       .padding(.horizontal, 20)
       .padding(.bottom, 32)
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
+  }
+
+  @ViewBuilder
+  private var badges: some View {
+    ForEach(look.activeOptions) { option in
+      EffectBadge(title: option.category.title, option: option)
+    }
+
+    if let mask = look.eyebrowMask {
+      MaskBadge(title: "Brow Shape", mask: mask)
+    }
+  }
+
+  @ViewBuilder
+  private var opacityChip: some View {
+    if !look.isEmpty {
+      OpacityChip(opacity: look.opacity)
+    }
   }
 }
 

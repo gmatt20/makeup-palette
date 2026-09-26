@@ -33,6 +33,9 @@ enum OpacityPlacement {
   case leading
   /// Horizontal, along the bottom edge — fully open, no prominent crease.
   case bottom
+  /// Inside the fold's active division region (partially folded). The layout
+  /// draws the slider in the crease, so the palette shows none of its own.
+  case crease
 }
 
 private struct OpacityPlacementKey: EnvironmentKey {

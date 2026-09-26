@@ -93,6 +93,10 @@ camera reach into palette internals, or vice versa.
     `UserDefaults`. Swap this out for a real engine later.
   - `MakeupLook` — immutable snapshot the FC reads (`effects`, `eyebrowMask`,
     `opacity`).
+  - `PreviewAllSession` — pure value for "Preview All": a category + page;
+    `visibleOptions` (4 at a time, short last page wraps to the start),
+    `showNextPage/PreviousPage` (cyclic), `looks(over:)` → one `MakeupLook`
+    per camera (base look with that category swapped; keeps a user recolor).
 - `Palette/`
   - `MakeupPaletteView` — the white MP panel; category rows, press/hold
     swatches, and the opacity control. Reads `\.opacityPlacement` +
@@ -100,11 +104,16 @@ camera reach into palette internals, or vice versa.
   - `SwatchColorEditor` — long-press modal; **circular hue/saturation color
     wheel** + brightness slider; streams changes back to the bridge.
   - `PaletteTypography` — swap fonts here (Helvetica Neue today).
+  - `CreaseOpacitySlider` — label-free opacity slider (either axis) that
+    `DuoStudioLayout` places inside the fold while bent. Track fills red from
+    empty (0%) to full (100%); the thumb is an interactive Liquid Glass knob.
   - `MakeupColor+SwiftUI` — `Color(makeupColor:)`.
 - `Layout/`
   - `DuoStudioLayout` — the fold-aware container. Reads hinge via
     `onHingeChange` / `DeviceHinge` (iOS 27.1) with a size-class fallback.
-    Owns the split, the reflection state, and opacity placement.
+    Owns the split, the reflection state, and opacity placement. Takes a
+    third `crease: (Axis) -> View` slot, centered on the active `.division`
+    `ReservedRegion` (the layout never knows it's an opacity control).
   - `SwatchReflection` — `SwatchReflection` env value + `OpacityPlacement`
     enum + env plumbing.
 - `Camera/`
@@ -113,7 +122,10 @@ camera reach into palette internals, or vice versa.
   - `MockCameraFeedView` — placeholder gradient/viewfinder (**replace with the
     real 3D face**).
   - `MockCameraEffectsView` — consumes a `MakeupLook`, draws effect + mask
-    badges and an opacity chip. Stand-in for the real renderer.
+    badges and an opacity chip (stacks vertically when narrow). Stand-in for
+    the real renderer.
+  - `PreviewAllGridView` — full-screen 2×2 grid of cameras, one `MakeupLook`
+    each, plus bottom-right vertical up / down / close (xmark) glass buttons.
 
 ## Key behaviors & their rules
 
@@ -122,12 +134,20 @@ camera reach into palette internals, or vice versa.
   editable.
 - **Opacity:** `0.0...1.0 Float`, default `1.0`, clamped, applies to ALL
   effects, persisted. Placement is fold/orientation-aware
-  (`OpacityPlacement`): **top** (portrait, at the crease), **leading**
-  (landscape ~90°, at the hinge), **bottom** (fully open). Opacity must
+  (`OpacityPlacement`): **crease** (partially folded — an active `.division`
+  region exists; slider drawn IN the fold, palette hides its own), else
+  **top** (portrait), **leading** (landscape, not fully open), **bottom**
+  (landscape fully open). Opacity must
   never dim the palette UI — only the rendered makeup.
 - **Hinge reflection:** each swatch box mirrors across the phone's longer axis
   while the hinge angle is strictly **> 3° and < 87°** (3° padding). See
   `swatchReflectionEffect`.
+- **Preview All:** each category row has a "Preview All" tile between None
+  and the swatches. It calls `MakeupPaletteView.onPreviewAll(category)`;
+  `ContentView` holds `previewAll: PreviewAllSession?` and swaps the whole
+  `DuoStudioLayout` (camera + palette) for `PreviewAllGridView`. Up/down
+  cycle by 4 options (disabled when a category has ≤ 4); close returns to the
+  single camera + palette. Previewing does NOT apply anything to the bridge.
 - **Layout:** closed = camera full-screen; open = split (camera top / palette
   bottom in portrait, camera left / palette right in landscape). Camera gets
   the larger share via `splitArrangementLayoutRatio(0.64)`.
@@ -174,6 +194,9 @@ Relevant: `DeviceHinge { status, angle }`, `DeviceHingeContext.hinge`,
 - [ ] **Real face renderer.** Replace `MockCameraFeedView` /
   `MockCameraEffectsView` with a 3D face that consumes `MakeupLook`
   (teammates are sourcing the model). Nothing else should need to change.
+- [ ] **Preview All: tap a cell to apply?** Not implemented — cells are
+  view-only. A natural follow-up is tapping a camera to `bridge.select` that
+  option and close the grid.
 - [ ] **Only opacity persists.** Effect/mask selections are in-memory
   (kept across folds/rotations by SwiftUI state, but not across relaunch).
 
