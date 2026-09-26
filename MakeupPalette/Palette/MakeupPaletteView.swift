@@ -26,11 +26,7 @@ struct MakeupPaletteView<Bridge: MakeupEffectBridge>: View {
         .presentationDetents([.medium, .large])
       }
       .sheet(isPresented: $showPaywall) {
-        PaywallView(
-          priceText: premium.monthlyPriceText,
-          onSubscribe: { premium.subscribe() },
-          onRestore: { premium.restore() }
-        )
+        PaywallView(store: premium)
       }
   }
 

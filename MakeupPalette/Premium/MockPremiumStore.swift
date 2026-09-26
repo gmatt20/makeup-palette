@@ -9,6 +9,8 @@ import Observation
 @Observable
 final class MockPremiumStore: PremiumStore {
   private(set) var isSubscribed: Bool
+  private(set) var isPurchasing = false
+  private(set) var lastPurchaseError: String?
 
   let monthlyPriceText = "$4.99"
 
@@ -21,11 +23,13 @@ final class MockPremiumStore: PremiumStore {
   }
 
   func subscribe() {
+    lastPurchaseError = nil
     isSubscribed = true
     defaults.set(true, forKey: Self.subscribedKey)
   }
 
   func restore() {
+    lastPurchaseError = nil
     isSubscribed = defaults.bool(forKey: Self.subscribedKey)
   }
 }

@@ -21,6 +21,12 @@ protocol PremiumStore: AnyObject {
   /// The displayed price of the monthly plan (e.g. "$4.99").
   var monthlyPriceText: String { get }
 
+  /// True while a purchase/restore is in flight (drives the paywall spinner).
+  var isPurchasing: Bool { get }
+
+  /// A human-readable message from the last failed purchase/restore, or nil.
+  var lastPurchaseError: String? { get }
+
   /// Begin/complete the purchase flow. The mock grants entitlement instantly.
   func subscribe()
 

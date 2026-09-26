@@ -2,12 +2,11 @@ import SwiftUI
 
 /// Subscription paywall shown when a locked premium swatch is tapped.
 ///
-/// Presentation-only: it calls back to the parent to run the purchase, so it
-/// works the same over `MockPremiumStore` today and RevenueCat later.
+/// Reads live state from the `PremiumStore`: shows a spinner while a purchase
+/// is in flight, surfaces failures, and dismisses only once the subscription
+/// is actually active. Works the same over `MockPremiumStore` and RevenueCat.
 struct PaywallView: View {
-  var priceText: String
-  var onSubscribe: () -> Void
-  var onRestore: () -> Void
+  var store: any PremiumStore
 
   @Environment(\.dismiss) private var dismiss
 
@@ -65,28 +64,44 @@ struct PaywallView: View {
         }
 
         VStack(spacing: 12) {
+          if let error = store.lastPurchaseError {
+            Text(error)
+              .font(.custom("HelveticaNeue", size: 12))
+              .foregroundStyle(.red)
+              .multilineTextAlignment(.center)
+              .fixedSize(horizontal: false, vertical: true)
+          }
+
           Button {
-            onSubscribe()
-            dismiss()
+            store.subscribe()
           } label: {
-            VStack(spacing: 2) {
-              Text("Subscribe")
-                .font(.custom("HelveticaNeue-Bold", size: 18))
-              Text("\(priceText) / month")
-                .font(.custom("HelveticaNeue", size: 13))
-                .opacity(0.9)
+            Group {
+              if store.isPurchasing {
+                ProgressView()
+                  .tint(.white)
+              } else {
+                VStack(spacing: 2) {
+                  Text("Subscribe")
+                    .font(.custom("HelveticaNeue-Bold", size: 18))
+                  Text("\(store.monthlyPriceText) / month")
+                    .font(.custom("HelveticaNeue", size: 13))
+                    .opacity(0.9)
+                }
+              }
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, 14)
             .background(accent, in: RoundedRectangle(cornerRadius: 16))
             .foregroundStyle(.white)
           }
+          .disabled(store.isPurchasing)
 
           Button("Restore Purchases") {
-            onRestore()
+            store.restore()
           }
           .font(.custom("HelveticaNeue", size: 14))
           .foregroundStyle(accent)
+          .disabled(store.isPurchasing)
 
           Text("Cancel anytime. Billed monthly.")
             .font(.custom("HelveticaNeue", size: 11))
@@ -108,5 +123,9 @@ struct PaywallView: View {
       }
     }
     .environment(\.colorScheme, .light)
+    // Close only once the subscription is actually active.
+    .onChange(of: store.isSubscribed) { _, subscribed in
+      if subscribed { dismiss() }
+    }
   }
 }
