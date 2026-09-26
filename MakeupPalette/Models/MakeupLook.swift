@@ -6,13 +6,16 @@
 struct MakeupLook: Equatable {
   /// The applied option per region; absent regions are bare.
   var effects: [MakeupCategory: MakeupOption]
+  /// The applied brow-shape stencil, if any — rendered independently of the
+  /// brow tint carried in `effects[.brow]`.
+  var eyebrowMask: EyebrowMask?
   /// Global strength applied to every effect, 0...1. The FC dims the rendered
   /// makeup by this amount — never the palette or its labels.
   var opacity: Float
 
-  static let none = MakeupLook(effects: [:], opacity: 1)
+  static let none = MakeupLook(effects: [:], eyebrowMask: nil, opacity: 1)
 
-  var isEmpty: Bool { effects.isEmpty }
+  var isEmpty: Bool { effects.isEmpty && eyebrowMask == nil }
 
   func option(for category: MakeupCategory) -> MakeupOption? {
     effects[category]

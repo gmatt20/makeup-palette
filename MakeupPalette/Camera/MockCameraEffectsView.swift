@@ -16,6 +16,10 @@ struct MockCameraEffectsView: View {
           EffectBadge(title: option.category.title, option: option)
         }
 
+        if let mask = look.eyebrowMask {
+          MaskBadge(title: "Brow Shape", mask: mask)
+        }
+
         Spacer(minLength: 0)
 
         if !look.isEmpty {
@@ -40,6 +44,26 @@ private struct EffectBadge: View {
         .frame(width: 16, height: 16)
 
       Text("\(title): \(option.name)")
+        .font(.caption.weight(.semibold))
+        .lineLimit(1)
+    }
+    .foregroundStyle(.white)
+    .padding(.horizontal, 11)
+    .padding(.vertical, 8)
+    .background(.black.opacity(0.55), in: Capsule())
+  }
+}
+
+private struct MaskBadge: View {
+  var title: String
+  var mask: EyebrowMask
+
+  var body: some View {
+    HStack(spacing: 7) {
+      Image(systemName: "theatermasks.fill")
+        .font(.caption)
+
+      Text("\(title): \(mask.name)")
         .font(.caption.weight(.semibold))
         .lineLimit(1)
     }

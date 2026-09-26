@@ -4,6 +4,7 @@ struct DuoStudioLayout<Camera: View, Palette: View>: View {
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   @State private var hingeIsOpen: Bool?
   @State private var hingeAngleDegrees: Double?
+  @State private var hingeFullyOpen: Bool?
 
   private var camera: Camera
   private var palette: Palette
@@ -24,8 +25,15 @@ struct DuoStudioLayout<Camera: View, Palette: View>: View {
           options: .includeInactive
         ).isEmpty
 
-        let longAxis: Axis = geometry.size.height >= geometry.size.width ? .vertical : .horizontal
+        let isPortrait = geometry.size.height >= geometry.size.width
+        let longAxis: Axis = isPortrait ? .vertical : .horizontal
         let isReflecting = hingeAngleDegrees.map { $0 > 3 && $0 < 87 } ?? false
+        // Portrait fold: crease sits above the palette -> opacity on top.
+        // Landscape: hug the crease (leading) at ~90°, drop to the bottom when
+        // fully open.
+        let opacityPlacement: OpacityPlacement = isPortrait
+          ? .top
+          : ((hingeFullyOpen ?? false) ? .bottom : .leading)
 
         if hingeIsOpen ?? isInnerDisplay {
           ArrangementView {
@@ -36,7 +44,11 @@ struct DuoStudioLayout<Camera: View, Palette: View>: View {
                 \.swatchReflection,
                 SwatchReflection(isActive: isReflecting, longAxis: longAxis)
               )
+              .environment(\.opacityPlacement, opacityPlacement)
           }
+          // Give the camera the larger share of the split (≈64%) so the
+          // makeup panel is the smaller region.
+          .splitArrangementLayoutRatio(0.64)
           .arrangementViewStyle(.split)
         } else {
           camera.ignoresSafeArea()
@@ -46,6 +58,7 @@ struct DuoStudioLayout<Camera: View, Palette: View>: View {
       .onHingeChange { _, context in
         hingeIsOpen = context.hinge.map { $0.status != .closed }
         hingeAngleDegrees = context.hinge.map { $0.angle.degrees }
+        hingeFullyOpen = context.hinge.map { $0.status == .fullyOpen }
       }
     } else {
       GeometryReader { geometry in

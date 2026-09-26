@@ -24,6 +24,28 @@ extension EnvironmentValues {
   }
 }
 
+/// Where the palette's opacity control sits, chosen from fold + orientation so
+/// it hugs the hinge/crease when folded and drops to the bottom when flat.
+enum OpacityPlacement {
+  /// Horizontal, along the top edge — portrait fold, crease above the palette.
+  case top
+  /// Vertical, along the leading edge — landscape fold (~90°), crease at left.
+  case leading
+  /// Horizontal, along the bottom edge — fully open, no prominent crease.
+  case bottom
+}
+
+private struct OpacityPlacementKey: EnvironmentKey {
+  static let defaultValue: OpacityPlacement = .bottom
+}
+
+extension EnvironmentValues {
+  var opacityPlacement: OpacityPlacement {
+    get { self[OpacityPlacementKey.self] }
+    set { self[OpacityPlacementKey.self] = newValue }
+  }
+}
+
 extension View {
   /// Mirrors the view across the phone's longer axis while the fold is
   /// partially open, animating in and out as the hinge crosses the range.
