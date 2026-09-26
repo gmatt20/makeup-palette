@@ -1,17 +1,23 @@
 import SwiftUI
 
 struct ContentView: View {
-  @State private var bridge = MockMakeupEffectBridge()
+  /// The real face session. `@State` keeps one instance alive across posture changes, so the
+  /// applied look, viewing angle, and restored makeup survive folding and rotation.
+  @State private var bridge = FaceMakeupEffectBridge()
 
   var body: some View {
     DuoStudioLayout {
       CameraPreviewView {
-        MockCameraFeedView()
+        MakeupFacePreview(controller: bridge.face)
       } effects: {
-        MockCameraEffectsView(look: bridge.look)
+        // The renderer draws the makeup on the portrait itself, so the mock effect badges are
+        // no longer needed here. To keep the old mock camera instead, swap the two lines above
+        // back to MockCameraFeedView() and MockCameraEffectsView(look: bridge.look).
+        EmptyView()
       }
     } palette: {
       MakeupPaletteView(bridge: bridge)
     }
   }
 }
+
