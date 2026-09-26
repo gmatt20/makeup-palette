@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Makeup · Windows station</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">{"imports":{"three":"/vendor/build/three.module.js","three/addons/":"/vendor/examples/jsm/"}}</script>
+</head>
+<body>
+  <header>
+    <div>
+      <p class="eyebrow">WINDOWS LOCAL MVP</p>
+      <h1>Makeup station</h1>
+    </div>
+    <label class="pose">Compact
+      <select id="pose" aria-label="Compact open or closed">
+        <option value="open">Open — face and palette</option>
+        <option value="closed">Closed — face only</option>
+      </select>
+    </label>
+  </header>
+  <main id="station">
+    <section class="mirror" aria-label="Face preview">
+      <div id="viewport" tabindex="0" role="img" aria-label="3D face. Drag or use arrow keys to rotate. Press Home for the front view."></div>
+      <div class="view-bar">
+        <span>Drag to turn · arrow keys also work</span>
+        <button type="button" id="front">Front</button>
+        <label><input id="before" type="checkbox"> Show original</label>
+      </div>
+      <p id="status" role="status" aria-live="polite">Loading portrait and makeup masks…</p>
+    </section>
+    <aside id="palette" aria-label="Makeup controls">
+      <p class="eyebrow">YOUR PALETTE</p>
+      <h2>Make it your own.</h2>
+      <fieldset id="controls" disabled>
+        <label for="treatment">Treatment</label>
+        <select id="treatment"></select>
+        <div class="color-row">
+          <label for="color">Color</label>
+          <input type="color" id="color" value="#bc395b" aria-label="Makeup color">
+          <output id="hex" for="color">#BC395B</output>
+        </div>
+        <div id="swatches" aria-label="Color swatches"></div>
+        <div class="label-row">
+          <label for="intensity">Intensity</label>
+          <output id="amount" for="intensity">55%</output>
+        </div>
+        <input id="intensity" type="range" min="0" max="100" value="55" aria-valuemin="0" aria-valuemax="100">
+        <p id="treatment-state">No added makeup for this treatment.</p>
+        <button type="button" id="clear" class="secondary">Clear treatment</button>
+        <button type="button" id="reset" class="secondary">Reset all</button>
+      </fieldset>
+      <p class="note">Changes save in this browser. Original restores the supplied model, including its existing makeup.</p>
+      <p class="note">Local Windows MVP per PRD-WINDOWS.md. Native Duo fold and RealityKit validation stay on Mac.</p>
+    </aside>
+  </main>
+  <script type="module" src="app.mjs"></script>
+</body>
+</html>
