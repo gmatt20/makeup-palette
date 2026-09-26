@@ -116,6 +116,22 @@ camera reach into palette internals, or vice versa.
     `ReservedRegion` (the layout never knows it's an opacity control).
   - `SwatchReflection` — `SwatchReflection` env value + `OpacityPlacement`
     enum + env plumbing.
+- `Premium/`
+  - `PremiumStore` — protocol gating premium shades (`isSubscribed`,
+    `monthlyPriceText`, `subscribe()`, `restore()`). **This is the RevenueCat
+    integration seam** — its doc comment maps each member to the SDK call.
+  - `MockPremiumStore` — `@Observable` demo store; grants entitlement on
+    `subscribe()` and persists it in `UserDefaults`. Swap for a
+    `RevenueCatPremiumStore` later.
+  - `PaywallView` — the $4.99/mo subscription sheet; presentation-only, calls
+    back to run the purchase so it works over mock or RevenueCat unchanged.
+  - `RevenueCatPremiumStore` — live store (`#if canImport(RevenueCat)`):
+    `Purchases.configure`, entitlement `premium`, `customerInfoStream`,
+    purchase/restore, real localized price.
+  - `PremiumStoreFactory` — the one place that picks the store: RevenueCat when
+    the SDK + API key are present, else `MockPremiumStore`. `ContentView` uses
+    it and passes `any PremiumStore` to the palette.
+  - `AppSecrets` — reads `REVENUECAT_APPLE_API_KEY` from `Info.plist`.
 - `Camera/`
   - `CameraPreviewView` — layers a non-interactive effects overlay over a
     replaceable feed.
@@ -151,6 +167,12 @@ camera reach into palette internals, or vice versa.
 - **Layout:** closed = camera full-screen; open = split (camera top / palette
   bottom in portrait, camera left / palette right in landscape). Camera gets
   the larger share via `splitArrangementLayoutRatio(0.64)`.
+- **Premium gating:** `MakeupOption.isPremium` marks ~1/3 of each group.
+  A locked premium swatch (premium && `!isSubscribed`) shows a gold border +
+  lock icon; tapping or holding it opens the `PaywallView` instead of
+  applying. Subscribing unlocks all premium swatches live. The palette is
+  generic over `Store: PremiumStore` (mirrors the `Bridge` generic) so
+  Observation tracks `isSubscribed`.
 
 ## Discovering the iOS 27.1 hinge/fold API
 
@@ -164,6 +186,25 @@ Relevant: `DeviceHinge { status, angle }`, `DeviceHingeContext.hinge`,
 `View.onHingeChange`, `GeometryProxy.reservedRegions(kind:.division)`,
 `ArrangementView` + `.arrangementViewStyle(.split)`,
 `View.splitArrangementLayoutRatio(_:)`.
+
+## Secrets / config
+
+The RevenueCat public Apple SDK key (`appl_...`) lives in **`.env`** as
+`REVENUECAT_APPLE_API_KEY` (git-ignored). A SwiftUI binary can't read `.env`,
+so it flows in as a build setting:
+
+```
+.env ──scripts/gen-secrets.sh──▶ Config/Secrets.xcconfig  (git-ignored)
+                                   #include? by Config/Base.xcconfig (committed)
+                                   ──▶ target baseConfigurationReference
+                                   ──▶ Info.plist $(REVENUECAT_APPLE_API_KEY)
+                                   ──▶ AppSecrets.revenueCatAPIKey
+```
+
+On a fresh clone: `cp Config/Secrets.example.xcconfig Config/Secrets.xcconfig`
+and paste the key, **or** put it in `.env` and run `scripts/gen-secrets.sh`.
+No key → `AppSecrets` returns nil → `MockPremiumStore` (paywall still demoable).
+Only the **public** key (`appl_...`) belongs here — never the secret (`sk_...`).
 
 ## Conventions
 
@@ -191,6 +232,14 @@ Relevant: `DeviceHinge { status, angle }`, `DeviceHingeContext.hinge`,
 - [ ] **No palette UI for eyebrow masks yet.** `applyEyebrowMask` /
   `disableEyebrowMask` exist on the bridge and surface in `MakeupLook`, but
   there is no Brow Shape row in the MP.
+- [x] **RevenueCat SDK integrated.** SPM package linked, `RevenueCatPremiumStore`
+  written, key plumbing + `PremiumStoreFactory` swap done, builds clean.
+- [ ] **Finish RevenueCat go-live (dashboard + verify).** Create the `premium`
+  entitlement and a $4.99/mo product (linked to an App Store Connect product)
+  in the RevenueCat dashboard, then verify a real purchase via a StoreKit
+  config file or sandbox account on a device/Xcode run — cannot be verified
+  from headless `xcodebuild`. Confirm the key in `.env` is the RevenueCat
+  **Apple public SDK key** (`appl_...`).
 - [ ] **Real face renderer.** Replace `MockCameraFeedView` /
   `MockCameraEffectsView` with a 3D face that consumes `MakeupLook`
   (teammates are sourcing the model). Nothing else should need to change.

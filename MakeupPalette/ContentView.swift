@@ -29,7 +29,7 @@ struct ContentView: View {
             EmptyView()
           }
         } palette: {
-          MakeupPaletteView(bridge: bridge) { category in
+          MakeupPaletteView(bridge: bridge, premium: premium) { category in
             withAnimation(.smooth) { previewAll = PreviewAllSession(category: category) }
           }
         } crease: { axis in

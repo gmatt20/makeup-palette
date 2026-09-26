@@ -1,4 +1,5 @@
 enum MakeupCatalog {
+  // Roughly one third of each group is premium, to exercise the paywall.
   static let lipOptions: [MakeupOption] = [
     swatch(.lips, "lips.classicRed", "Classic Red", 0xC41E3A),
     swatch(.lips, "lips.nudeBeige", "Nude Beige", 0xC8A08A),
@@ -6,10 +7,10 @@ enum MakeupCatalog {
     swatch(.lips, "lips.berry", "Berry", 0x8E2A4F),
     swatch(.lips, "lips.coral", "Coral", 0xF26B5B),
     swatch(.lips, "lips.mauve", "Mauve", 0xA8757F),
-    swatch(.lips, "lips.wine", "Wine", 0x5E1A2E),
-    swatch(.lips, "lips.peach", "Peach", 0xF4A68A),
-    swatch(.lips, "lips.hotPink", "Hot Pink", 0xE0457B),
-    swatch(.lips, "lips.brickBrown", "Brick Brown", 0x9C4A3A)
+    swatch(.lips, "lips.wine", "Wine", 0x5E1A2E, premium: true),
+    swatch(.lips, "lips.peach", "Peach", 0xF4A68A, premium: true),
+    swatch(.lips, "lips.hotPink", "Hot Pink", 0xE0457B, premium: true),
+    swatch(.lips, "lips.brickBrown", "Brick Brown", 0x9C4A3A, premium: true)
   ]
 
   static let blushOptions: [MakeupOption] = [
@@ -17,15 +18,15 @@ enum MakeupCatalog {
     swatch(.blush, "blush.peach", "Peach", 0xF6A889),
     swatch(.blush, "blush.coral", "Coral", 0xE8837A),
     swatch(.blush, "blush.rose", "Rose", 0xD3727F),
-    swatch(.blush, "blush.berry", "Berry", 0xB04A64),
-    swatch(.blush, "blush.terracotta", "Terracotta", 0xC6705A)
+    swatch(.blush, "blush.berry", "Berry", 0xB04A64, premium: true),
+    swatch(.blush, "blush.terracotta", "Terracotta", 0xC6705A, premium: true)
   ]
 
   static let browOptions: [MakeupOption] = [
     swatch(.brow, "brow.taupe", "Taupe", 0x8B776B),
     swatch(.brow, "brow.softBrown", "Soft Brown", 0x6D4F3E),
     swatch(.brow, "brow.chestnut", "Chestnut", 0x794634),
-    swatch(.brow, "brow.espresso", "Espresso", 0x352A28)
+    swatch(.brow, "brow.espresso", "Espresso", 0x352A28, premium: true)
   ]
 
   static func options(for category: MakeupCategory) -> [MakeupOption] {
@@ -36,14 +37,23 @@ enum MakeupCatalog {
     }
   }
 
-  /// Builds a solid-color swatch whose preview tile and applied tint share one color.
+  /// Builds a solid-color swatch whose preview tile and applied tint share one
+  /// color. Pass `premium: true` to gate it behind the subscription.
   private static func swatch(
     _ category: MakeupCategory,
     _ id: String,
     _ name: String,
-    _ rgb: UInt32
+    _ rgb: UInt32,
+    premium: Bool = false
   ) -> MakeupOption {
     let color = MakeupColor(rgb: rgb)
-    return MakeupOption(id: id, category: category, name: name, swatch: .color(color), tint: color)
+    return MakeupOption(
+      id: id,
+      category: category,
+      name: name,
+      swatch: .color(color),
+      tint: color,
+      isPremium: premium
+    )
   }
 }
