@@ -53,8 +53,27 @@ Also noted, not fixed, because they belong to other owners or need a Mac:
 
 - `noseContour.png` masks the whole nose bridge and tip. PRD section 4 asks for the **nose
   sides**. Needs a re-trace in `scripts/prepare_assets.py` and a re-bake.
-- `README.md` links `docs/windows-acceptance.md`, which does not exist. README is being
-  edited on the `feat/windows-camera-test` worktree; left alone to avoid a conflicting write.
+- **Six masks have compressed dynamic range.** The bake applies a Gaussian blur to shapes too
+  thin to survive it, so the mask never reaches 255 and the treatment cannot reach full blend.
+  Measured peak coverage, and the strongest alpha each can reach at intensity 1.0
+  (`alpha = peak/255 * 0.8`):
+
+  | Treatment | Peak | Max alpha |
+  |---|---:|---:|
+  | cupidBowHighlight | 129 | 0.40 |
+  | jawContour | 150 | 0.47 |
+  | cheekContour | 172 | 0.54 |
+  | cheekHighlight | 178 | 0.56 |
+  | bronzer | 189 | 0.59 |
+  | templeContour | 194 | 0.61 |
+
+  The defined-edge treatments are all at peak 255: eyeliner, lip liner, lipstick, brow fill.
+  Everything is visible at full intensity, so FC-03 is not blocked, but the low end of the
+  intensity slider does almost nothing for these six, and `cupidBowHighlight` on a 1,464-texel
+  region is the weakest. Fix by reducing the blur radius or widening the source shape in
+  `scripts/prepare_assets.py`, then re-baking. Report any visual tradeoff per PRD section 10.
+- `README.md` links `docs/windows-acceptance.md`, which did not exist when this record was
+  written; it has since been added.
 - `face.glb` carries `baseColorFactor [0.4, 0.4, 0.4, 1]` from trimesh, so any glTF viewer
   renders the portrait at 40% brightness. The USDZ the native app loads is unaffected.
 
