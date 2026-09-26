@@ -1,0 +1,52 @@
+{
+  "sourceSHA256": "1512568419fe7c019c051f951add787d6273119d82a264ab22f590e9e89f3a6f",
+  "triangles": 558206,
+  "vertices": 397545,
+  "upAxis": "Y",
+  "frontAxis": "+Z",
+  "bounds": [
+    [
+      -1.0208317041397095,
+      -1.0,
+      -0.6438088417053223
+    ],
+    [
+      1.0208317041397095,
+      1.0,
+      0.6438088417053223
+    ]
+  ],
+  "cameraTarget": [
+    0,
+    0.32,
+    0
+  ],
+  "orthographicHeight": 1.65,
+  "textureSize": [
+    2048,
+    2048
+  ],
+  "treatments": [
+    "foundation",
+    "concealer",
+    "blush",
+    "bronzer",
+    "cheekContour",
+    "noseContour",
+    "jawContour",
+    "templeContour",
+    "cheekHighlight",
+    "noseHighlight",
+    "cupidBowHighlight",
+    "eyeshadow",
+    "eyeliner",
+    "browFill",
+    "lipstick",
+    "lipLiner",
+    "mascara"
+  ],
+  "maskChannel": "luminance",
+  "glbUV": "top-left; Three texture.flipY=false",
+  "usdUV": "bottom-left; st primvar",
+  "maskMethod": "Manually traced frontal regions, baked through mesh UVs with visibility test; original geometry unchanged."
+}
