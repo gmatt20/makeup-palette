@@ -26,6 +26,7 @@
 		A10000000000000000000033 /* DuoStudioLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000027 /* DuoStudioLayout.swift */; };
 		A10000000000000000000041 /* SwatchReflection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000040 /* SwatchReflection.swift */; };
 		A10000000000000000000043 /* SwatchColorEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000042 /* SwatchColorEditor.swift */; };
+		A10000000000000000000045 /* MakeupLook.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000044 /* MakeupLook.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		A10000000000000000000027 /* DuoStudioLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuoStudioLayout.swift; sourceTree = "<group>"; };
 		A10000000000000000000040 /* SwatchReflection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwatchReflection.swift; sourceTree = "<group>"; };
 		A10000000000000000000042 /* SwatchColorEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwatchColorEditor.swift; sourceTree = "<group>"; };
+		A10000000000000000000044 /* MakeupLook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeupLook.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 				A10000000000000000000020 /* MakeupCatalog.swift */,
 				A10000000000000000000021 /* MakeupEffectBridge.swift */,
 				A10000000000000000000022 /* MockMakeupEffectBridge.swift */,
+				A10000000000000000000044 /* MakeupLook.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -225,6 +228,7 @@
 				A10000000000000000000033 /* DuoStudioLayout.swift in Sources */,
 				A10000000000000000000041 /* SwatchReflection.swift in Sources */,
 				A10000000000000000000043 /* SwatchColorEditor.swift in Sources */,
+				A10000000000000000000045 /* MakeupLook.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

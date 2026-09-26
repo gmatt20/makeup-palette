@@ -8,12 +8,7 @@ struct ContentView: View {
       CameraPreviewView {
         MockCameraFeedView()
       } effects: {
-        MockCameraEffectsView(
-          lipsEffect: bridge.lipsEffect,
-          blushEffect: bridge.blushEffect,
-          browEffect: bridge.browEffect,
-          opacity: bridge.opacity
-        )
+        MockCameraEffectsView(look: bridge.look)
       }
     } palette: {
       MakeupPaletteView(bridge: bridge)

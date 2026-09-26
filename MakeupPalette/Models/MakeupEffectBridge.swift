@@ -15,6 +15,18 @@ protocol MakeupEffectBridge: AnyObject {
 }
 
 extension MakeupEffectBridge {
+  /// The single snapshot the fake-camera reads. Derived from the applied
+  /// effects and global opacity, so the FC never touches palette internals.
+  var look: MakeupLook {
+    var effects: [MakeupCategory: MakeupOption] = [:]
+    for category in MakeupCategory.allCases {
+      if let option = selectedOption(for: category) {
+        effects[category] = option
+      }
+    }
+    return MakeupLook(effects: effects, opacity: opacity)
+  }
+
   func selectedOption(for category: MakeupCategory) -> MakeupOption? {
     switch category {
     case .brow: browEffect

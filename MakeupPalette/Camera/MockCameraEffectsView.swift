@@ -1,31 +1,27 @@
 import SwiftUI
 
+/// Mock overlay standing in for the real face renderer.
+///
+/// Reads a `MakeupLook` and lists the active effects plus the global opacity.
+/// A real 3D face view can replace this by consuming the same `MakeupLook`.
 struct MockCameraEffectsView: View {
-  var lipsEffect: MakeupOption?
-  var blushEffect: MakeupOption?
-  var browEffect: MakeupOption?
-  var opacity: Float
+  var look: MakeupLook
 
   var body: some View {
     VStack {
       Spacer()
 
       HStack(spacing: 8) {
-        if let lipsEffect {
-          EffectBadge(title: "Lips", option: lipsEffect)
-        }
-
-        if let blushEffect {
-          EffectBadge(title: "Blush", option: blushEffect)
-        }
-
-        if let browEffect {
-          EffectBadge(title: "Brows", option: browEffect)
+        ForEach(look.activeOptions) { option in
+          EffectBadge(title: option.category.title, option: option)
         }
 
         Spacer(minLength: 0)
+
+        if !look.isEmpty {
+          OpacityChip(opacity: look.opacity)
+        }
       }
-      .opacity(Double(opacity))
       .padding(.horizontal, 20)
       .padding(.bottom, 32)
     }
@@ -51,5 +47,19 @@ private struct EffectBadge: View {
     .padding(.horizontal, 11)
     .padding(.vertical, 8)
     .background(.black.opacity(0.55), in: Capsule())
+  }
+}
+
+private struct OpacityChip: View {
+  var opacity: Float
+
+  var body: some View {
+    Text("Opacity \(Int((opacity * 100).rounded()))%")
+      .font(.caption.weight(.semibold))
+      .monospacedDigit()
+      .foregroundStyle(.white)
+      .padding(.horizontal, 11)
+      .padding(.vertical, 8)
+      .background(.black.opacity(0.55), in: Capsule())
   }
 }
