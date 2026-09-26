@@ -31,6 +31,10 @@
 		A10000000000000000000052 /* PremiumStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000051 /* PremiumStore.swift */; };
 		A10000000000000000000054 /* MockPremiumStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000053 /* MockPremiumStore.swift */; };
 		A10000000000000000000056 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000055 /* PaywallView.swift */; };
+		A10000000000000000000061 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000060 /* RevenueCat */; };
+		A10000000000000000000063 /* AppSecrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000062 /* AppSecrets.swift */; };
+		A10000000000000000000065 /* RevenueCatPremiumStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000064 /* RevenueCatPremiumStore.swift */; };
+		A10000000000000000000067 /* PremiumStoreFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000066 /* PremiumStoreFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +64,11 @@
 		A10000000000000000000051 /* PremiumStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumStore.swift; sourceTree = "<group>"; };
 		A10000000000000000000053 /* MockPremiumStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPremiumStore.swift; sourceTree = "<group>"; };
 		A10000000000000000000055 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
+		A10000000000000000000062 /* AppSecrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSecrets.swift; sourceTree = "<group>"; };
+		A10000000000000000000064 /* RevenueCatPremiumStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevenueCatPremiumStore.swift; sourceTree = "<group>"; };
+		A10000000000000000000066 /* PremiumStoreFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumStoreFactory.swift; sourceTree = "<group>"; };
+		A10000000000000000000071 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Base.xcconfig; path = Config/Base.xcconfig; sourceTree = "<group>"; };
+		A10000000000000000000072 /* Secrets.example.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Secrets.example.xcconfig; path = Config/Secrets.example.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A10000000000000000000061 /* RevenueCat in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,8 +87,18 @@
 			isa = PBXGroup;
 			children = (
 				A10000000000000000000003 /* MakeupPalette */,
+				A10000000000000000000073 /* Config */,
 				A10000000000000000000004 /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		A10000000000000000000073 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000071 /* Base.xcconfig */,
+				A10000000000000000000072 /* Secrets.example.xcconfig */,
+			);
+			name = Config;
 			sourceTree = "<group>";
 		};
 		A10000000000000000000003 /* MakeupPalette */ = {
@@ -95,6 +115,14 @@
 				A1000000000000000000000A /* Assets.xcassets */,
 			);
 			path = MakeupPalette;
+			sourceTree = "<group>";
+		};
+		A10000000000000000000004 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000006 /* MakeupPalette.app */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		A10000000000000000000017 /* Camera */ = {
@@ -149,16 +177,11 @@
 				A10000000000000000000051 /* PremiumStore.swift */,
 				A10000000000000000000053 /* MockPremiumStore.swift */,
 				A10000000000000000000055 /* PaywallView.swift */,
+				A10000000000000000000062 /* AppSecrets.swift */,
+				A10000000000000000000064 /* RevenueCatPremiumStore.swift */,
+				A10000000000000000000066 /* PremiumStoreFactory.swift */,
 			);
 			path = Premium;
-			sourceTree = "<group>";
-		};
-		A10000000000000000000004 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				A10000000000000000000006 /* MakeupPalette.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -177,6 +200,9 @@
 			dependencies = (
 			);
 			name = MakeupPalette;
+			packageProductDependencies = (
+				A10000000000000000000060 /* RevenueCat */,
+			);
 			productName = MakeupPalette;
 			productReference = A10000000000000000000006 /* MakeupPalette.app */;
 			productType = "com.apple.product-type.application";
@@ -205,6 +231,9 @@
 				Base,
 			);
 			mainGroup = A10000000000000000000002;
+			packageReferences = (
+				34942FE53068672C0000BDE2 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */,
+			);
 			productRefGroup = A10000000000000000000004 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -253,6 +282,9 @@
 				A10000000000000000000052 /* PremiumStore.swift in Sources */,
 				A10000000000000000000054 /* MockPremiumStore.swift in Sources */,
 				A10000000000000000000056 /* PaywallView.swift in Sources */,
+				A10000000000000000000063 /* AppSecrets.swift in Sources */,
+				A10000000000000000000065 /* RevenueCatPremiumStore.swift in Sources */,
+				A10000000000000000000067 /* PremiumStoreFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,6 +330,7 @@
 		};
 		A10000000000000000000015 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A10000000000000000000071 /* Base.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -315,6 +348,7 @@
 		};
 		A10000000000000000000016 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A10000000000000000000071 /* Base.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -352,6 +386,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		34942FE53068672C0000BDE2 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RevenueCat/purchases-ios-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.91.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A10000000000000000000060 /* RevenueCat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 34942FE53068672C0000BDE2 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
+			productName = RevenueCat;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A10000000000000000000001 /* Project object */;
 }

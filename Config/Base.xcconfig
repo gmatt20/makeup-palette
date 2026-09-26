@@ -1,0 +1,9 @@
+// Base build configuration for the app target.
+//
+// Secrets are supplied by Config/Secrets.xcconfig (git-ignored), generated
+// from .env via scripts/gen-secrets.sh. The default below keeps the setting
+// defined (empty) so the build still works before secrets exist — the app
+// then falls back to MockPremiumStore.
+REVENUECAT_APPLE_API_KEY =
+
+#include? "Secrets.xcconfig"

@@ -1,8 +1,8 @@
 import SwiftUI
 
-struct MakeupPaletteView<Bridge: MakeupEffectBridge, Store: PremiumStore>: View {
+struct MakeupPaletteView<Bridge: MakeupEffectBridge>: View {
   var bridge: Bridge
-  var premium: Store
+  var premium: any PremiumStore
 
   @State private var editingOption: MakeupOption?
   @State private var editingCategory: MakeupCategory?

@@ -6,4 +6,5 @@ xcuserdata/
 DerivedData/
 build/
 .env
+Config/Secrets.xcconfig
 
