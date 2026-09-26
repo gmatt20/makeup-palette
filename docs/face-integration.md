@@ -7,11 +7,13 @@ You own `MakeupPaletteView`, `MakeupCatalog`, `DuoStudioLayout`, `MakeupLook`,
 portrait, the UV makeup masks, compositing, the receiving API, and latest-look persistence. It
 never renders palette chrome and never owns a second copy of palette state.
 
-This document is self-contained on purpose so it can land on `main` before the code does. The
-component itself is on the `feat/camera` branch, which has an unrelated git history (no common
-ancestor with `main`), so it cannot be merged — it has to be brought across as files. Companion
-documents on that branch: `docs/API.md`, `docs/native-validation.md`, `docs/mask-authoring.md`,
-`docs/handoff.md`, and the product requirements in `PRD.md`.
+The component ships in this same pull request at `Packages/MakeupFace/`, already wired into
+`MakeupPalette.xcodeproj`, so merging is the whole job. The face work originally lived on a
+`feat/camera` branch with an unrelated git history (no common ancestor with `main`), which is why
+it arrives as files rather than as a merge.
+
+Supporting documents in this PR: [`docs/API.md`](API.md) for the full controller surface, and
+[`docs/native-validation.md`](native-validation.md) for what is proven and what is not.
 
 ---
 
@@ -278,8 +280,8 @@ ratio alone.
 
 **The component's Swift has never been compiled on an Apple toolchain.** It was written and
 audited on Windows. Every acceptance criterion in the PRD is currently Unverified, Logic-only, or
-Partial; the honest breakdown and a Mac checklist live in `docs/native-validation.md` on the
-`feat/camera` branch.
+Partial; the honest breakdown and a Mac checklist are in
+[`docs/native-validation.md`](native-validation.md).
 
 One defect was already found this way and fixed: the base-colour material was constructed with an
 invalid `MaterialColorParameter` initializer, which meant the target could not type-check at all.
@@ -299,9 +301,29 @@ none of that is measurable on Windows.
 
 ## 11. Suggested order of work
 
-1. Bring the package across and add it to the Xcode project (`MakeupCore`, `MakeupFace`);
-   confirm `Face.usdz` and the masks are in the bundle.
-2. Add `FaceMakeupEffectBridge`; swap `ContentView`.
-3. Verify lips, blush, and brows end to end with your existing palette.
-4. Work the native checklist; report what fails.
+1. Merge, then build. The package is wired and `ContentView` is already swapped.
+2. Confirm the portrait loads and the original appearance looks right.
+3. Exercise lips, blush, and brows with your existing palette; check rotation and Front.
+4. Work the [native checklist](native-validation.md); report what fails.
 5. Then, if useful, widen `MakeupCategory` to expose the other treatments.
+
+## 12. What changed in the project, and how to undo it
+
+`MakeupPalette.xcodeproj/project.pbxproj` gained 41 lines and changed nothing that already
+existed:
+
+- one `XCLocalSwiftPackageReference` pointing at `Packages/MakeupFace`
+- `MakeupCore` and `MakeupFace` product dependencies on the `MakeupPalette` target
+- both linked in the Frameworks build phase
+- `MakeupPalette/Face/FaceMakeupEffectBridge.swift` added to the target and to a new `Face` group
+
+If the project file misbehaves, revert that single file and add the package by hand instead:
+File > Add Package Dependencies > Add Local, then choose `Packages/MakeupFace`. The pbxproj change
+is isolated in its own commit for exactly that reason.
+
+`Face.usdz`, `base-color.jpg`, the 17 masks, and the manifest are bundled — about 11.9 MB. The
+Windows-only `face.glb` derivative is deliberately excluded, keeping 17.7 MB out of the app.
+
+The mock camera still compiles and is untouched: `MockCameraFeedView`, `MockCameraEffectsView`,
+and `MockMakeupEffectBridge` are simply no longer referenced from `ContentView`. Delete them when
+you are satisfied, or keep them for design iteration.
