@@ -9,14 +9,14 @@ import PackageDescription
 /// bundles the prepared portrait and masks.
 let package = Package(
     name: "MakeupFace",
-    platforms: [.iOS(.v17), .macOS(.v14)],
+    platforms: [.iOS("18.0"), .macOS(.v14)],
     products: [
         .library(name: "MakeupCore", targets: ["MakeupCore"]),
         .library(name: "MakeupFace", targets: ["MakeupFace"])
     ],
     targets: [
         .target(name: "MakeupCore"),
-        .target(name: "MakeupFace", dependencies: ["MakeupCore"], resources: [.copy("Resources")]),
+        .target(name: "MakeupFace", dependencies: ["MakeupCore"], resources: [.copy("FaceAssets")]),
         .testTarget(name: "MakeupCoreTests", dependencies: ["MakeupCore"])
     ]
 )

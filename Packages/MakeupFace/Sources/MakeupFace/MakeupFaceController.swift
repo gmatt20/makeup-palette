@@ -57,7 +57,10 @@ public final class MakeupFaceController: ObservableObject {
         store = LookStore(url: url)
         // A stripped or mis-copied resource bundle must surface as a load failure, not a crash
         // and not a silently blank face (PRD section 7).
-        let bundled = Bundle.module.resourceURL?.appendingPathComponent("Resources")
+        // Folder is named "FaceAssets" (not "Resources"): a bundle subfolder
+        // literally named "Resources" is a reserved bundle-layout name that
+        // makes codesign reject the resource bundle on iOS.
+        let bundled = Bundle.module.resourceURL?.appendingPathComponent("FaceAssets")
         resources = bundled
         composer = bundled.map(MakeupTextureComposer.init(resources:))
         view = FaceRenderView(frame: .zero, cameraMode: .nonAR, automaticallyConfigureSession: false)

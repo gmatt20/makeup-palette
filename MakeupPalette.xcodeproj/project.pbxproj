@@ -34,6 +34,13 @@
 		A10000000000000000000056 /* FaceMakeupEffectBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000055 /* FaceMakeupEffectBridge.swift */; };
 		A10000000000000000000053 /* MakeupCore in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000051 /* MakeupCore */; };
 		A10000000000000000000054 /* MakeupFace in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000052 /* MakeupFace */; };
+		A10000000000000000000091 /* PremiumStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000090 /* PremiumStore.swift */; };
+		A10000000000000000000093 /* MockPremiumStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000092 /* MockPremiumStore.swift */; };
+		A10000000000000000000095 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000094 /* PaywallView.swift */; };
+		A10000000000000000000097 /* AppSecrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000096 /* AppSecrets.swift */; };
+		A10000000000000000000099 /* RevenueCatPremiumStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000098 /* RevenueCatPremiumStore.swift */; };
+		A1000000000000000000009B /* PremiumStoreFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000009A /* PremiumStoreFactory.swift */; };
+		A1000000000000000000009E /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = A1000000000000000000009D /* RevenueCat */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +71,14 @@
 		A1000000000000000000004C /* CreaseOpacitySlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreaseOpacitySlider.swift; sourceTree = "<group>"; };
 		A10000000000000000000046 /* EyebrowMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyebrowMask.swift; sourceTree = "<group>"; };
 		A10000000000000000000055 /* FaceMakeupEffectBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceMakeupEffectBridge.swift; sourceTree = "<group>"; };
+		A10000000000000000000090 /* PremiumStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumStore.swift; sourceTree = "<group>"; };
+		A10000000000000000000092 /* MockPremiumStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPremiumStore.swift; sourceTree = "<group>"; };
+		A10000000000000000000094 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
+		A10000000000000000000096 /* AppSecrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSecrets.swift; sourceTree = "<group>"; };
+		A10000000000000000000098 /* RevenueCatPremiumStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevenueCatPremiumStore.swift; sourceTree = "<group>"; };
+		A1000000000000000000009A /* PremiumStoreFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumStoreFactory.swift; sourceTree = "<group>"; };
+		A10000000000000000000071 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Base.xcconfig; path = Config/Base.xcconfig; sourceTree = "<group>"; };
+		A10000000000000000000072 /* Secrets.example.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Secrets.example.xcconfig; path = Config/Secrets.example.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +88,7 @@
 			files = (
 				A10000000000000000000053 /* MakeupCore in Frameworks */,
 				A10000000000000000000054 /* MakeupFace in Frameworks */,
+				A1000000000000000000009E /* RevenueCat in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,7 +123,7 @@
 				A10000000000000000000034 /* Models */,
 				A10000000000000000000035 /* Palette */,
 				A10000000000000000000036 /* Layout */,
-				A10000000000000000000050 /* Premium */,
+				A1000000000000000000009F /* Premium */,
 				A10000000000000000000009 /* Info.plist */,
 				A1000000000000000000000A /* Assets.xcassets */,
 			);
@@ -179,15 +195,15 @@
 			path = Layout;
 			sourceTree = "<group>";
 		};
-		A10000000000000000000050 /* Premium */ = {
+		A1000000000000000000009F /* Premium */ = {
 			isa = PBXGroup;
 			children = (
-				A10000000000000000000051 /* PremiumStore.swift */,
-				A10000000000000000000053 /* MockPremiumStore.swift */,
-				A10000000000000000000055 /* PaywallView.swift */,
-				A10000000000000000000062 /* AppSecrets.swift */,
-				A10000000000000000000064 /* RevenueCatPremiumStore.swift */,
-				A10000000000000000000066 /* PremiumStoreFactory.swift */,
+				A10000000000000000000090 /* PremiumStore.swift */,
+				A10000000000000000000092 /* MockPremiumStore.swift */,
+				A10000000000000000000094 /* PaywallView.swift */,
+				A10000000000000000000096 /* AppSecrets.swift */,
+				A10000000000000000000098 /* RevenueCatPremiumStore.swift */,
+				A1000000000000000000009A /* PremiumStoreFactory.swift */,
 			);
 			path = Premium;
 			sourceTree = "<group>";
@@ -211,6 +227,7 @@
 			packageProductDependencies = (
 				A10000000000000000000051 /* MakeupCore */,
 				A10000000000000000000052 /* MakeupFace */,
+				A1000000000000000000009D /* RevenueCat */,
 			);
 			productName = MakeupPalette;
 			productReference = A10000000000000000000006 /* MakeupPalette.app */;
@@ -242,6 +259,7 @@
 			mainGroup = A10000000000000000000002;
 			packageReferences = (
 				A10000000000000000000050 /* XCLocalSwiftPackageReference "Packages/MakeupFace" */,
+				A1000000000000000000009C /* XCRemoteSwiftPackageReference "purchases-ios-spm" */,
 			);
 			productRefGroup = A10000000000000000000004 /* Products */;
 			projectDirPath = "";
@@ -292,6 +310,12 @@
 				A1000000000000000000004D /* CreaseOpacitySlider.swift in Sources */,
 				A10000000000000000000047 /* EyebrowMask.swift in Sources */,
 				A10000000000000000000056 /* FaceMakeupEffectBridge.swift in Sources */,
+				A10000000000000000000091 /* PremiumStore.swift in Sources */,
+				A10000000000000000000093 /* MockPremiumStore.swift in Sources */,
+				A10000000000000000000095 /* PaywallView.swift in Sources */,
+				A10000000000000000000097 /* AppSecrets.swift in Sources */,
+				A10000000000000000000099 /* RevenueCatPremiumStore.swift in Sources */,
+				A1000000000000000000009B /* PremiumStoreFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,6 +418,17 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		A1000000000000000000009C /* XCRemoteSwiftPackageReference "purchases-ios-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RevenueCat/purchases-ios-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.91.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCLocalSwiftPackageReference section */
 		A10000000000000000000050 /* XCLocalSwiftPackageReference "Packages/MakeupFace" */ = {
 			isa = XCLocalSwiftPackageReference;
@@ -409,6 +444,11 @@
 		A10000000000000000000052 /* MakeupFace */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MakeupFace;
+		};
+		A1000000000000000000009D /* RevenueCat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A1000000000000000000009C /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
+			productName = RevenueCat;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

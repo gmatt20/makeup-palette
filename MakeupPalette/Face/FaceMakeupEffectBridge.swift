@@ -58,16 +58,16 @@ final class FaceMakeupEffectBridge: MakeupEffectBridge {
     Task { try? await face.clear(.lipstick) }
   }
 
-  /// Brow shape. `EyebrowMask.assetName` names a baked brow stamp in the face component, so
-  /// shape and tint stay independent, which is how `EyebrowMask` already models them.
+  /// Brow shape. Tracked in the look so it stays independent of brow tint.
+  /// NOTE: the RealityKit `MakeupFaceController` does not yet implement a
+  /// brow-shape stamp (no `setEyebrowStyle`), so this records state only; wire
+  /// it to a controller method once brow-shape rendering exists.
   func applyEyebrowMask(_ mask: EyebrowMask) {
     eyebrowMask = mask
-    Task { try? await face.setEyebrowStyle(mask.assetName) }
   }
 
   func disableEyebrowMask() {
     eyebrowMask = nil
-    Task { try? await face.setEyebrowStyle(nil) }
   }
 
   /// The palette's global opacity becomes per-region intensity on every applied region.

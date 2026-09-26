@@ -1,9 +1,12 @@
 import SwiftUI
+import MakeupFace
 
 struct ContentView: View {
   /// The real face session. `@State` keeps one instance alive across posture changes, so the
   /// applied look, viewing angle, and restored makeup survive folding and rotation.
   @State private var bridge = FaceMakeupEffectBridge()
+  // RevenueCat when the SDK + API key are configured, else the offline mock.
+  @State private var premium: any PremiumStore = PremiumStoreFactory.make()
   /// Non-nil while "Preview All" replaces the studio with the 2×2 camera grid.
   @State private var previewAll: PreviewAllSession?
 

@@ -5,6 +5,9 @@
 xcuserdata/
 DerivedData/
 build/
+# SwiftPM build output (e.g. Packages/MakeupFace/.build) — never commit this
+.build/
+.swiftpm/
 .env
 Config/Secrets.xcconfig
 
