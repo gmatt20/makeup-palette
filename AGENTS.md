@@ -104,11 +104,16 @@ camera reach into palette internals, or vice versa.
   - `SwatchColorEditor` — long-press modal; **circular hue/saturation color
     wheel** + brightness slider; streams changes back to the bridge.
   - `PaletteTypography` — swap fonts here (Helvetica Neue today).
+  - `CreaseOpacitySlider` — label-free opacity slider (either axis) that
+    `DuoStudioLayout` places inside the fold while bent. Track fills red from
+    empty (0%) to full (100%); the thumb is an interactive Liquid Glass knob.
   - `MakeupColor+SwiftUI` — `Color(makeupColor:)`.
 - `Layout/`
   - `DuoStudioLayout` — the fold-aware container. Reads hinge via
     `onHingeChange` / `DeviceHinge` (iOS 27.1) with a size-class fallback.
-    Owns the split, the reflection state, and opacity placement.
+    Owns the split, the reflection state, and opacity placement. Takes a
+    third `crease: (Axis) -> View` slot, centered on the active `.division`
+    `ReservedRegion` (the layout never knows it's an opacity control).
   - `SwatchReflection` — `SwatchReflection` env value + `OpacityPlacement`
     enum + env plumbing.
 - `Camera/`
@@ -129,8 +134,10 @@ camera reach into palette internals, or vice versa.
   editable.
 - **Opacity:** `0.0...1.0 Float`, default `1.0`, clamped, applies to ALL
   effects, persisted. Placement is fold/orientation-aware
-  (`OpacityPlacement`): **top** (portrait, at the crease), **leading**
-  (landscape ~90°, at the hinge), **bottom** (fully open). Opacity must
+  (`OpacityPlacement`): **crease** (partially folded — an active `.division`
+  region exists; slider drawn IN the fold, palette hides its own), else
+  **top** (portrait), **leading** (landscape, not fully open), **bottom**
+  (landscape fully open). Opacity must
   never dim the palette UI — only the rendered makeup.
 - **Hinge reflection:** each swatch box mirrors across the phone's longer axis
   while the hinge angle is strictly **> 3° and < 87°** (3° padding). See

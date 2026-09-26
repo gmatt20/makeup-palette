@@ -51,6 +51,8 @@ struct MakeupPaletteView<Bridge: MakeupEffectBridge>: View {
           .padding(.top, 6)
           .padding(.bottom, 16)
       }
+    case .crease:
+      makeupList
     }
   }
 

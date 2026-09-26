@@ -27,6 +27,8 @@ struct ContentView: View {
           MakeupPaletteView(bridge: bridge) { category in
             withAnimation(.smooth) { previewAll = PreviewAllSession(category: category) }
           }
+        } crease: { axis in
+          CreaseOpacitySlider(opacity: bridge.opacity, axis: axis) { bridge.applyOpacity($0) }
         }
         .transition(.opacity)
       }
