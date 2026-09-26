@@ -1,22 +1,49 @@
 enum MakeupCatalog {
-  static let browOptions: [MakeupOption] = [
-    .init(id: "brow.taupe", category: .brow, name: "Taupe", swatch: .color(.init(rgb: 0x8B776B)), tint: .init(rgb: 0x8B776B)),
-    .init(id: "brow.softBrown", category: .brow, name: "Soft Brown", swatch: .color(.init(rgb: 0x6D4F3E)), tint: .init(rgb: 0x6D4F3E)),
-    .init(id: "brow.chestnut", category: .brow, name: "Chestnut", swatch: .color(.init(rgb: 0x794634)), tint: .init(rgb: 0x794634)),
-    .init(id: "brow.espresso", category: .brow, name: "Espresso", swatch: .color(.init(rgb: 0x352A28)), tint: .init(rgb: 0x352A28))
+  static let lipOptions: [MakeupOption] = [
+    swatch(.lips, "lips.classicRed", "Classic Red", 0xC41E3A),
+    swatch(.lips, "lips.nudeBeige", "Nude Beige", 0xC8A08A),
+    swatch(.lips, "lips.rosyPink", "Rosy Pink", 0xD46A7E),
+    swatch(.lips, "lips.berry", "Berry", 0x8E2A4F),
+    swatch(.lips, "lips.coral", "Coral", 0xF26B5B),
+    swatch(.lips, "lips.mauve", "Mauve", 0xA8757F),
+    swatch(.lips, "lips.wine", "Wine", 0x5E1A2E),
+    swatch(.lips, "lips.peach", "Peach", 0xF4A68A),
+    swatch(.lips, "lips.hotPink", "Hot Pink", 0xE0457B),
+    swatch(.lips, "lips.brickBrown", "Brick Brown", 0x9C4A3A)
   ]
 
   static let blushOptions: [MakeupOption] = [
-    .init(id: "blush.rose", category: .blush, name: "Rose", swatch: .color(.init(rgb: 0xC67586)), tint: .init(rgb: 0xC67586)),
-    .init(id: "blush.peach", category: .blush, name: "Peach", swatch: .color(.init(rgb: 0xE49B80)), tint: .init(rgb: 0xE49B80)),
-    .init(id: "blush.coral", category: .blush, name: "Coral", swatch: .color(.init(rgb: 0xD96F73)), tint: .init(rgb: 0xD96F73)),
-    .init(id: "blush.berry", category: .blush, name: "Berry", swatch: .color(.init(rgb: 0xA95170)), tint: .init(rgb: 0xA95170))
+    swatch(.blush, "blush.softPink", "Soft Pink", 0xF4A7B0),
+    swatch(.blush, "blush.peach", "Peach", 0xF6A889),
+    swatch(.blush, "blush.coral", "Coral", 0xE8837A),
+    swatch(.blush, "blush.rose", "Rose", 0xD3727F),
+    swatch(.blush, "blush.berry", "Berry", 0xB04A64),
+    swatch(.blush, "blush.terracotta", "Terracotta", 0xC6705A)
+  ]
+
+  static let browOptions: [MakeupOption] = [
+    swatch(.brow, "brow.taupe", "Taupe", 0x8B776B),
+    swatch(.brow, "brow.softBrown", "Soft Brown", 0x6D4F3E),
+    swatch(.brow, "brow.chestnut", "Chestnut", 0x794634),
+    swatch(.brow, "brow.espresso", "Espresso", 0x352A28)
   ]
 
   static func options(for category: MakeupCategory) -> [MakeupOption] {
     switch category {
-    case .brow: browOptions
+    case .lips: lipOptions
     case .blush: blushOptions
+    case .brow: browOptions
     }
+  }
+
+  /// Builds a solid-color swatch whose preview tile and applied tint share one color.
+  private static func swatch(
+    _ category: MakeupCategory,
+    _ id: String,
+    _ name: String,
+    _ rgb: UInt32
+  ) -> MakeupOption {
+    let color = MakeupColor(rgb: rgb)
+    return MakeupOption(id: id, category: category, name: name, swatch: .color(color), tint: color)
   }
 }

@@ -9,8 +9,9 @@ struct ContentView: View {
         MockCameraFeedView()
       } effects: {
         MockCameraEffectsView(
-          browEffect: bridge.browEffect,
+          lipsEffect: bridge.lipsEffect,
           blushEffect: bridge.blushEffect,
+          browEffect: bridge.browEffect,
           opacity: bridge.opacity
         )
       }

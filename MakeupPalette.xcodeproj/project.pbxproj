@@ -24,6 +24,8 @@
 		A10000000000000000000031 /* MakeupPaletteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000025 /* MakeupPaletteView.swift */; };
 		A10000000000000000000032 /* MockCameraEffectsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000026 /* MockCameraEffectsView.swift */; };
 		A10000000000000000000033 /* DuoStudioLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000027 /* DuoStudioLayout.swift */; };
+		A10000000000000000000041 /* SwatchReflection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000040 /* SwatchReflection.swift */; };
+		A10000000000000000000043 /* SwatchColorEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000042 /* SwatchColorEditor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +48,8 @@
 		A10000000000000000000025 /* MakeupPaletteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeupPaletteView.swift; sourceTree = "<group>"; };
 		A10000000000000000000026 /* MockCameraEffectsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCameraEffectsView.swift; sourceTree = "<group>"; };
 		A10000000000000000000027 /* DuoStudioLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuoStudioLayout.swift; sourceTree = "<group>"; };
+		A10000000000000000000040 /* SwatchReflection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwatchReflection.swift; sourceTree = "<group>"; };
+		A10000000000000000000042 /* SwatchColorEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwatchColorEditor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +116,7 @@
 				A10000000000000000000023 /* MakeupColor+SwiftUI.swift */,
 				A10000000000000000000024 /* PaletteTypography.swift */,
 				A10000000000000000000025 /* MakeupPaletteView.swift */,
+				A10000000000000000000042 /* SwatchColorEditor.swift */,
 			);
 			path = Palette;
 			sourceTree = "<group>";
@@ -120,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				A10000000000000000000027 /* DuoStudioLayout.swift */,
+				A10000000000000000000040 /* SwatchReflection.swift */,
 			);
 			path = Layout;
 			sourceTree = "<group>";
@@ -217,6 +223,8 @@
 				A10000000000000000000031 /* MakeupPaletteView.swift in Sources */,
 				A10000000000000000000032 /* MockCameraEffectsView.swift in Sources */,
 				A10000000000000000000033 /* DuoStudioLayout.swift in Sources */,
+				A10000000000000000000041 /* SwatchReflection.swift in Sources */,
+				A10000000000000000000043 /* SwatchColorEditor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

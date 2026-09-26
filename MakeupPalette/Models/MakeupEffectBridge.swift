@@ -2,12 +2,15 @@
 protocol MakeupEffectBridge: AnyObject {
   var browEffect: MakeupOption? { get }
   var blushEffect: MakeupOption? { get }
+  var lipsEffect: MakeupOption? { get }
   var opacity: Float { get }
 
   func applyBrowEffect(_ option: MakeupOption)
   func disableBrowEffect()
   func applyBlushEffect(_ option: MakeupOption)
   func disableBlushEffect()
+  func applyLipsEffect(_ option: MakeupOption)
+  func disableLipsEffect()
   func applyOpacity(_ value: Float)
 }
 
@@ -16,6 +19,7 @@ extension MakeupEffectBridge {
     switch category {
     case .brow: browEffect
     case .blush: blushEffect
+    case .lips: lipsEffect
     }
   }
 
@@ -32,6 +36,12 @@ extension MakeupEffectBridge {
         applyBlushEffect(option)
       } else {
         disableBlushEffect()
+      }
+    case .lips:
+      if let option {
+        applyLipsEffect(option)
+      } else {
+        disableLipsEffect()
       }
     }
   }

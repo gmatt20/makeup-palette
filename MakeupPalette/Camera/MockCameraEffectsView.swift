@@ -1,8 +1,9 @@
 import SwiftUI
 
 struct MockCameraEffectsView: View {
-  var browEffect: MakeupOption?
+  var lipsEffect: MakeupOption?
   var blushEffect: MakeupOption?
+  var browEffect: MakeupOption?
   var opacity: Float
 
   var body: some View {
@@ -10,12 +11,16 @@ struct MockCameraEffectsView: View {
       Spacer()
 
       HStack(spacing: 8) {
-        if let browEffect {
-          EffectBadge(title: "Brows", option: browEffect)
+        if let lipsEffect {
+          EffectBadge(title: "Lips", option: lipsEffect)
         }
 
         if let blushEffect {
           EffectBadge(title: "Blush", option: blushEffect)
+        }
+
+        if let browEffect {
+          EffectBadge(title: "Brows", option: browEffect)
         }
 
         Spacer(minLength: 0)

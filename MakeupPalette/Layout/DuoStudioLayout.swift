@@ -3,6 +3,7 @@ import SwiftUI
 struct DuoStudioLayout<Camera: View, Palette: View>: View {
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   @State private var hingeIsOpen: Bool?
+  @State private var hingeAngleDegrees: Double?
 
   private var camera: Camera
   private var palette: Palette
@@ -23,11 +24,18 @@ struct DuoStudioLayout<Camera: View, Palette: View>: View {
           options: .includeInactive
         ).isEmpty
 
+        let longAxis: Axis = geometry.size.height >= geometry.size.width ? .vertical : .horizontal
+        let isReflecting = hingeAngleDegrees.map { $0 > 3 && $0 < 87 } ?? false
+
         if hingeIsOpen ?? isInnerDisplay {
           ArrangementView {
             camera
           } secondary: {
             palette
+              .environment(
+                \.swatchReflection,
+                SwatchReflection(isActive: isReflecting, longAxis: longAxis)
+              )
           }
           .arrangementViewStyle(.split)
         } else {
@@ -37,6 +45,7 @@ struct DuoStudioLayout<Camera: View, Palette: View>: View {
       .background(Color(white: 0.22).ignoresSafeArea())
       .onHingeChange { _, context in
         hingeIsOpen = context.hinge.map { $0.status != .closed }
+        hingeAngleDegrees = context.hinge.map { $0.angle.degrees }
       }
     } else {
       GeometryReader { geometry in

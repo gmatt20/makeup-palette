@@ -3,6 +3,9 @@ import SwiftUI
 struct MakeupPaletteView<Bridge: MakeupEffectBridge>: View {
   var bridge: Bridge
 
+  @State private var editingOption: MakeupOption?
+  @State private var editingCategory: MakeupCategory?
+
   var body: some View {
     VStack(spacing: 0) {
       ScrollView {
@@ -15,10 +18,17 @@ struct MakeupPaletteView<Bridge: MakeupEffectBridge>: View {
             PaletteCategoryRow(
               category: category,
               options: MakeupCatalog.options(for: category),
-              selectedID: bridge.selectedOption(for: category)?.id
-            ) { option in
-              bridge.select(option, for: category)
-            }
+              appliedOption: bridge.selectedOption(for: category),
+              onSelect: { option in
+                bridge.select(option, for: category)
+              },
+              onEdit: { option in
+                // Make the swatch active so color tweaks preview live on the FC.
+                bridge.select(option, for: category)
+                editingCategory = category
+                editingOption = option
+              }
+            )
           }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -36,14 +46,23 @@ struct MakeupPaletteView<Bridge: MakeupEffectBridge>: View {
     .background(.white)
     .foregroundStyle(.black)
     .environment(\.colorScheme, .light)
+    .sheet(item: $editingOption) { option in
+      SwatchColorEditor(option: option) { recolored in
+        if let category = editingCategory {
+          bridge.select(recolored, for: category)
+        }
+      }
+      .presentationDetents([.medium, .large])
+    }
   }
 }
 
 private struct PaletteCategoryRow: View {
   var category: MakeupCategory
   var options: [MakeupOption]
-  var selectedID: String?
+  var appliedOption: MakeupOption?
   var onSelect: (MakeupOption?) -> Void
+  var onEdit: (MakeupOption) -> Void
 
   var body: some View {
     VStack(alignment: .leading, spacing: 14) {
@@ -56,19 +75,22 @@ private struct PaletteCategoryRow: View {
           PaletteSwatchButton(
             category: category,
             option: nil,
-            isSelected: selectedID == nil
-          ) {
-            onSelect(nil)
-          }
+            isSelected: appliedOption == nil,
+            onSelect: { onSelect(nil) },
+            onEdit: {}
+          )
 
           ForEach(options) { option in
+            let isSelected = appliedOption?.id == option.id
+            // When selected, show the live (possibly recolored) applied color.
+            let display = isSelected ? (appliedOption ?? option) : option
             PaletteSwatchButton(
               category: category,
-              option: option,
-              isSelected: selectedID == option.id
-            ) {
-              onSelect(option)
-            }
+              option: display,
+              isSelected: isSelected,
+              onSelect: { onSelect(option) },
+              onEdit: { onEdit(display) }
+            )
           }
         }
         .padding(.horizontal, 20)
@@ -83,34 +105,47 @@ private struct PaletteSwatchButton: View {
   var category: MakeupCategory
   var option: MakeupOption?
   var isSelected: Bool
-  var onTap: () -> Void
+  var onSelect: () -> Void
+  var onEdit: () -> Void
+
+  @Environment(\.swatchReflection) private var reflection
+
+  private var isEditable: Bool { option?.editableColor != nil }
 
   var body: some View {
-    Button(action: onTap) {
-      VStack(spacing: 8) {
-        ZStack {
-          RoundedRectangle(cornerRadius: 14)
-            .fill(Color(white: 0.95))
+    VStack(spacing: 8) {
+      ZStack {
+        RoundedRectangle(cornerRadius: 14)
+          .fill(Color(white: 0.95))
 
-          swatchContent
-        }
-        .frame(width: 66, height: 66)
-        .clipShape(RoundedRectangle(cornerRadius: 14))
-        .overlay {
-          RoundedRectangle(cornerRadius: 14)
-            .strokeBorder(isSelected ? .black : Color(white: 0.8), lineWidth: isSelected ? 2 : 1)
-        }
-
-        Text(option?.name ?? "None")
-          .font(PaletteTypography.label)
-          .lineLimit(1)
+        swatchContent
       }
-      .frame(width: 90, height: 104)
-      .contentShape(Rectangle())
+      .frame(width: 66, height: 66)
+      .clipShape(RoundedRectangle(cornerRadius: 14))
+      .overlay {
+        RoundedRectangle(cornerRadius: 14)
+          .strokeBorder(isSelected ? .black : Color(white: 0.8), lineWidth: isSelected ? 2 : 1)
+      }
+
+      Text(option?.name ?? "None")
+        .font(PaletteTypography.label)
+        .lineLimit(1)
     }
-    .buttonStyle(.plain)
+    .frame(width: 90, height: 104)
+    .swatchReflectionEffect(reflection)
+    .contentShape(Rectangle())
+    // Press applies immediately; hold opens the color editor.
+    .onTapGesture { onSelect() }
+    .onLongPressGesture(minimumDuration: 0.35) {
+      if isEditable { onEdit() }
+    }
+    .accessibilityElement(children: .combine)
+    .accessibilityAddTraits(.isButton)
     .accessibilityLabel("\(category.title), \(option?.name ?? "None")")
     .accessibilityValue(isSelected ? "Selected" : "Not selected")
+    .accessibilityAction(named: "Edit color") {
+      if isEditable { onEdit() }
+    }
   }
 
   @ViewBuilder

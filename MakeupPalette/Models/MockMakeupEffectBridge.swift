@@ -6,6 +6,7 @@ import Observation
 final class MockMakeupEffectBridge: MakeupEffectBridge {
   private(set) var browEffect: MakeupOption?
   private(set) var blushEffect: MakeupOption?
+  private(set) var lipsEffect: MakeupOption?
   private(set) var opacity: Float
 
   @ObservationIgnored private let defaults: UserDefaults
@@ -35,6 +36,15 @@ final class MockMakeupEffectBridge: MakeupEffectBridge {
 
   func disableBlushEffect() {
     blushEffect = nil
+  }
+
+  func applyLipsEffect(_ option: MakeupOption) {
+    guard option.category == .lips else { return }
+    lipsEffect = option
+  }
+
+  func disableLipsEffect() {
+    lipsEffect = nil
   }
 
   func applyOpacity(_ value: Float) {

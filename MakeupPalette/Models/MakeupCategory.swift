@@ -1,13 +1,15 @@
 enum MakeupCategory: String, CaseIterable, Identifiable {
-  case brow
+  case lips
   case blush
+  case brow
 
   var id: Self { self }
 
   var title: String {
     switch self {
-    case .brow: "Brows"
+    case .lips: "Lips"
     case .blush: "Blush"
+    case .brow: "Brows"
     }
   }
 }
