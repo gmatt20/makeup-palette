@@ -1,6 +1,6 @@
 # iPhone Duo Makeup Palette — Product Requirements
 
-Status: Ready for implementation planning; no application code has been built.
+Status: Face-preview implementation complete for handoff. Windows PoC accepted (see `docs/windows-acceptance.md`). Native RealityKit / Duo fold checkpoint still pending on Mac (section 8).
 
 This document records the agreed product behavior and component ownership. No delivery deadline is specified. Items identified as implementation defaults are recommendations, not additional decisions attributed to the user.
 
