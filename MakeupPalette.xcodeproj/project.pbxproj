@@ -28,6 +28,9 @@
 		A10000000000000000000043 /* SwatchColorEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000042 /* SwatchColorEditor.swift */; };
 		A10000000000000000000045 /* MakeupLook.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000044 /* MakeupLook.swift */; };
 		A10000000000000000000047 /* EyebrowMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000046 /* EyebrowMask.swift */; };
+		A10000000000000000000056 /* FaceMakeupEffectBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000055 /* FaceMakeupEffectBridge.swift */; };
+		A10000000000000000000053 /* MakeupCore in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000051 /* MakeupCore */; };
+		A10000000000000000000054 /* MakeupFace in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000052 /* MakeupFace */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +57,7 @@
 		A10000000000000000000042 /* SwatchColorEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwatchColorEditor.swift; sourceTree = "<group>"; };
 		A10000000000000000000044 /* MakeupLook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeupLook.swift; sourceTree = "<group>"; };
 		A10000000000000000000046 /* EyebrowMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyebrowMask.swift; sourceTree = "<group>"; };
+		A10000000000000000000055 /* FaceMakeupEffectBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceMakeupEffectBridge.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +65,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A10000000000000000000053 /* MakeupCore in Frameworks */,
+				A10000000000000000000054 /* MakeupFace in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,6 +86,7 @@
 			children = (
 				A10000000000000000000007 /* MakeupPaletteApp.swift */,
 				A10000000000000000000008 /* ContentView.swift */,
+				A10000000000000000000057 /* Face */,
 				A10000000000000000000017 /* Camera */,
 				A10000000000000000000034 /* Models */,
 				A10000000000000000000035 /* Palette */,
@@ -98,6 +105,14 @@
 				A10000000000000000000026 /* MockCameraEffectsView.swift */,
 			);
 			path = Camera;
+			sourceTree = "<group>";
+		};
+		A10000000000000000000057 /* Face */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000055 /* FaceMakeupEffectBridge.swift */,
+			);
+			path = Face;
 			sourceTree = "<group>";
 		};
 		A10000000000000000000034 /* Models */ = {
@@ -160,6 +175,10 @@
 			dependencies = (
 			);
 			name = MakeupPalette;
+			packageProductDependencies = (
+				A10000000000000000000051 /* MakeupCore */,
+				A10000000000000000000052 /* MakeupFace */,
+			);
 			productName = MakeupPalette;
 			productReference = A10000000000000000000006 /* MakeupPalette.app */;
 			productType = "com.apple.product-type.application";
@@ -188,6 +207,9 @@
 				Base,
 			);
 			mainGroup = A10000000000000000000002;
+			packageReferences = (
+				A10000000000000000000050 /* XCLocalSwiftPackageReference "Packages/MakeupFace" */,
+			);
 			productRefGroup = A10000000000000000000004 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -233,6 +255,7 @@
 				A10000000000000000000043 /* SwatchColorEditor.swift in Sources */,
 				A10000000000000000000045 /* MakeupLook.swift in Sources */,
 				A10000000000000000000047 /* EyebrowMask.swift in Sources */,
+				A10000000000000000000056 /* FaceMakeupEffectBridge.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,6 +355,24 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		A10000000000000000000050 /* XCLocalSwiftPackageReference "Packages/MakeupFace" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/MakeupFace;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A10000000000000000000051 /* MakeupCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MakeupCore;
+		};
+		A10000000000000000000052 /* MakeupFace */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MakeupFace;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A10000000000000000000001 /* Project object */;
 }
