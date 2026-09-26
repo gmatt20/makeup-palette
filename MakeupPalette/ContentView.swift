@@ -1,9 +1,9 @@
 import SwiftUI
 
 struct ContentView: View {
-  @State private var bridge = MockMakeupEffectBridge()
-  // RevenueCat when the SDK + API key are configured, else the offline mock.
-  @State private var premium: any PremiumStore = PremiumStoreFactory.make()
+  /// The real face session. `@State` keeps one instance alive across posture changes, so the
+  /// applied look, viewing angle, and restored makeup survive folding and rotation.
+  @State private var bridge = FaceMakeupEffectBridge()
   /// Non-nil while "Preview All" replaces the studio with the 2×2 camera grid.
   @State private var previewAll: PreviewAllSession?
 
@@ -21,9 +21,12 @@ struct ContentView: View {
       } else {
         DuoStudioLayout {
           CameraPreviewView {
-            MockCameraFeedView()
+            MakeupFacePreview(controller: bridge.face)
           } effects: {
-            MockCameraEffectsView(look: bridge.look)
+            // The renderer draws the makeup on the portrait itself, so the mock effect badges
+            // are not needed here. To return to the mock camera, swap in MockCameraFeedView()
+            // and MockCameraEffectsView(look: bridge.look).
+            EmptyView()
           }
         } palette: {
           MakeupPaletteView(bridge: bridge, premium: premium) { category in
